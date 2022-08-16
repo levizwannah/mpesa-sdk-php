@@ -6,7 +6,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "LeviZwannah\\Mpesa\\": "src/"
+            "LeviZwannah\\MpesaSdk\\": "src/"
         }
     },
     "authors": [
