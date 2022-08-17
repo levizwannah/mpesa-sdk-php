@@ -1,19 +1,18 @@
 <?php
+
     namespace LeviZwannah\MpesaSdk\Helpers;
 
-    /**
-     * Reversal class
-     * @package levizwannah/mpesa-sdk-php
-     */
-    class Reversal extends MpesaWithInitiator{
-
+/**
+ * Represents the B2C transaction
+ * @package levizwannah/mpesa-sdk-php
+ */
+    class BusinessToCustomer extends MpesaWithInitiator{
+       
         /**
-         * The Mpesa Transaction ID
-         * 
+         * Phone number of the customer
          * @var string
          */
-        public string $transId;
-
+        public string $phone;
 
         /**
          * Amount that was paid.
@@ -39,22 +38,18 @@
          * Remarks for the reversal
          * @var string
          */
-        public string $remarks = "normal reversal";
+        public string $remarks = "payment";
 
         /**
          * Occasion for reversal
          * @var string
          */
-        public string $occasion = "reversal";
+        public string $occasion = "payment";
+
+        public string $type = Constant::BUSINESS;
 
         /**
-         * Receiver Identifier Type
-         * @var string
-         */
-        public string $type = "11";
-        /**
-         * Do not call this directly.
-         * use $mpesa->reversal()
+         * 
          * @param array $config
          */
         public function __construct(array $config)
@@ -62,13 +57,25 @@
             $this->configure($config);
         }
 
+        public function configure(array $config)
+        {
+            parent::configure($config);
+            if(isset($config["phone"])) $this->phone($config["phone"]);
+            return $this;
+        }
+
         /**
-         * Sets the transaction ID
-         * @param string $transactionId
+         * Sets the phone to pay to.
+         * Accepts 07xxxxxxxx, +2547xxxxxxxxx, or 2547xxxxxxxxx
+         * @param string $phone
          * 
          */
-        public function transId(string $transactionId){
-            $this->transactionId = $transactionId;
+        public function phone(string $phone){
+            if($phone[0] == "+") $phone = substr($phone, 1);
+            if($phone[0] == "0") $phone = substr($phone, 1);
+            if($phone[0] == "7") $phone = "254" . $phone;
+
+            $this->phone = $phone;
             return $this;
         }
 
@@ -123,7 +130,7 @@
         }
 
         /**
-         * Sets the receiver Identifier Type
+         * Sets the type. Must be one of: SalaryPayment, BusinessPayment, PromotionPayment
          * @param string $type
          * 
          */
@@ -135,51 +142,50 @@
         public function okay()
         {
             parent::okay();
-            $this->assertExists("transId", "Transaction ID");
+            $this->assertExists("phone", "Phone Number");
             $this->assertExists("amount", "Amount");
+            $this->assertExists("type", "Type of Payment");
             $this->assertExists("resultUrl", "Result URL");
             $this->assertExists("timeoutUrl", "Timeout URL");
-            $this->assertExists("type", "Receiver Identifier Type");
             $this->assertExists("remarks", "Remarks");
 
             return true;
         }
 
         /**
-         * Makes the reversal request
+         * Makes the B2C request to Mpesa
          */
-        public function make(){
+        public function pay(){
             $this->okay();
 
             $data = [
-                "CommandID" => "TransactionReversal",
-                "Initiator" => $this->initiator,
+                "InitiatorName" => $this->initiator,
                 "SecurityCredential" => $this->credential,
-                "TransactionID" => $this->transId,
+                "CommandID" => $this->type,
                 "Amount" => $this->amount,
-                "ReceiverParty" => $this->code,
-                "ReceiverIdentifierType" => $this->type,
+                "PartyA" => $this->code,
+                "PartyB" => $this->phone,
                 "ResultURL" => $this->resultUrl,
                 "QueueTimeOutURL" => $this->timeoutUrl,
                 "Remarks" => $this->remarks,
-                "Occasion" => $this->occasion
+                "Occasion" => $this->occasion 
             ];
 
-            $this->response = $this->request($data, "/mpesa/reversal/v1/request");
+            $this->response = $this->request($data, "/mpesa/b2c/v1/paymentrequest");
 
             return $this;
         }
 
         /**
-         * Makes the reversal request
+         * Makes the B2C request and returns the response.
          * @return object
          */
         public function __invoke()
         {
-            $this->make();
+            $this->pay();
             return $this->response();
         }
-
+        
     }
 
 ?>

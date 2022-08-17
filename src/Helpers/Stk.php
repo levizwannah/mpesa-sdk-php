@@ -157,6 +157,17 @@
         }
 
         /**
+         * Makes the STK push
+         * @return object response
+         */
+        public function __invoke()
+        {
+            $this->push();
+
+            return $this->response();
+        }
+
+        /**
          * Checks if all the required data to make an stk push exist and is not empty.
          * @return bool
          */
