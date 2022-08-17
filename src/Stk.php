@@ -65,13 +65,20 @@ use Exception;
             $this->configure($config);
         }
 
+        public function configure(array $config)
+        {
+            parent::configure($config);
+            if(isset($config["phone"])) $this->phone($config["phone"]);
+            return $this;
+        }
+
         /**
          * Sets the phone to pay to.
          * Accepts 07xxxxxxxx, +2547xxxxxxxxx, or 2547xxxxxxxxx
          * @param string $phone
          * 
          */
-        public function &phone(string $phone){
+        public function phone(string $phone){
             if($phone[0] == "+") $phone = substr($phone, 1);
             if($phone[0] == "0") $phone = substr($phone, 1);
             if($phone[0] == "7") $phone = "254" . $phone;
@@ -85,7 +92,7 @@ use Exception;
          * @param mixed $amount
          * 
          */
-        public function &amount($amount){
+        public function amount($amount){
             $this->amount = (int)$amount;
             return $this;
         }
@@ -95,7 +102,7 @@ use Exception;
          * @param string $reference
          * 
          */
-        public function &reference(string $reference){
+        public function reference(string $reference){
             $this->reference = $reference;
             return $this;
         }
@@ -105,7 +112,7 @@ use Exception;
          * @param string $description
          * 
          */
-        public function &description(string $description){
+        public function description(string $description){
             $this->description = $description;
             return $this;
         }
@@ -113,7 +120,7 @@ use Exception;
         /**
          * Sets the command ID to buy goods.
          */
-        public function &buygoods(){
+        public function buygoods(){
             $this->type = Constant::BUY_GOODS_ONLINE;
             return $this;
         }
@@ -121,19 +128,19 @@ use Exception;
         /**
          * Sets the command ID to paybill
          */
-        public function &paybill(){
+        public function paybill(){
             $this->type = Constant::PAY_BILL_ONLINE;
             return $this;
         }
 
-        public function &callback(string $callback){
+        public function callback(string $callback){
             $this->callback = $callback;
             return $this;
         }
 
-        public function &push(){
+        public function push(){
             $this->okay();
-            
+
             $timestamp = date("YmdHis");
             $password = base64_encode("$this->code$this->passkey$timestamp");
             
@@ -185,7 +192,7 @@ use Exception;
         public function error(){
             return isset($this->response->errorCode) ?
                     new RequestError($this->response()->errorCode, 
-                    $this->response()->errorDesc) 
+                    $this->response()->errorMessage) 
                     : false;
         }
 
@@ -194,8 +201,8 @@ use Exception;
          * @return bool
          */
         public function success(){
-            return isset($this->response()->ResultCode) 
-            && $this->response()->ResultCode == 0;
+            return isset($this->response()->ResponseCode) 
+            && $this->response()->ResponseCode == 0;
         }
     }
 

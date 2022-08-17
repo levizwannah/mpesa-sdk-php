@@ -14,7 +14,7 @@ use Exception;
          * Base URL for Safaricom requests.
          * @var string
          */
-        public string $baseUrl;
+        public string $baseUrl = "https://";
 
         /**
          * Consumer Key
@@ -85,10 +85,9 @@ use Exception;
             $this->secret = $secret;
             $this->env = strtolower($env);
 
-            $this->baseUrl = ($this->env == Constant::SANDBOX) ?
-                            "sandbox.safaricom.co.ke" : "api.safaricom.co.ke";
+            $this->baseUrl .= ($this->env === Constant::SANDBOX) ? "sandbox.safaricom.co.ke" 
+            : "api.safaricom.co.ke";
 
-            echo "constructor called...\n";
         }
 
          /**
@@ -114,7 +113,7 @@ use Exception;
          * @param array<string,string> $config
          * 
          */
-        public function &configure(array $config){
+        public function configure(array $config){
             foreach($config as $key => $val){
                 $this->$key = $val;
             }
@@ -126,7 +125,7 @@ use Exception;
          * @param string $key
          * 
          */
-        public function &key(string $key){
+        public function key(string $key){
             $this->key = $key;
             return $this;
         }
@@ -136,7 +135,7 @@ use Exception;
          * @param string $secret
          * 
          */
-        public function &secret(string $secret){
+        public function secret(string $secret){
             $this->secret = $secret;
             return $this;
         }
@@ -146,7 +145,7 @@ use Exception;
          * @param string $env
          * 
          */
-        public function &env(string $env){
+        public function env(string $env){
             $this->env = strtolower($env);
             return $this;
         }
@@ -156,7 +155,7 @@ use Exception;
          * @param string $initiator
          * 
          */
-        public function &initiator(string $initiator){
+        public function initiator(string $initiator){
             $this->initiator = $initiator;
             return $this;
         }
@@ -166,7 +165,7 @@ use Exception;
          * @param string $passkey
          * 
          */
-        public function &passkey(string $passkey){
+        public function passkey(string $passkey){
             $this->passkey = $passkey;
             return $this;
         }
@@ -177,7 +176,7 @@ use Exception;
          * @param string $credential
          * 
          */
-        public function &credential(string $credential){
+        public function credential(string $credential){
             $this->credential = $credential;
             return $this;
         }
@@ -187,7 +186,7 @@ use Exception;
          * @param string $code
          * 
          */
-        public function &code(string $code){
+        public function code(string $code){
             $this->code = $code;
             return $this;
         }
@@ -197,7 +196,7 @@ use Exception;
          * @param string $till
          * 
          */
-        public function &till(string $till){
+        public function till(string $till){
             $this->till = $till;
             return $this;
         }
@@ -252,11 +251,10 @@ use Exception;
          * @return string
          */
         public function token(){
-    
+
             $url = $this->baseUrl."/oauth/v1/generate?grant_type=client_credentials";
             $curl = curl_init($url);
             $credentials = base64_encode("$this->key:$this->secret");
-
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Basic $credentials"]);
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

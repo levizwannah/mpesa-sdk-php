@@ -6,12 +6,12 @@
      */
     class RequestError{
         public string $code;
-        public string $description;
+        public string $message;
 
-        public function __construct($code, $description)
+        public function __construct($code, $message)
         {
             $this->code = $code;
-            $this->description = $description;
+            $this->message = $message;
         }
     }
 
