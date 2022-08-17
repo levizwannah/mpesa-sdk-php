@@ -2,14 +2,20 @@
 
     namespace LeviZwannah\MpesaSdk;
 
+use BadMethodCallException;
 use Exception;
+    use LeviZwannah\MpesaSdk\Helpers\Constant;
+use LeviZwannah\MpesaSdk\Helpers\RequestError;
+use LeviZwannah\MpesaSdk\Helpers\Reversal;
+    use LeviZwannah\MpesaSdk\Helpers\Stk;
 
-/**
- * Main Mpesa Class
- * @package levizwannah/mpesa-php-sdk
- */
+    /**
+     * Main Mpesa Class
+     * @package levizwannah/mpesa-sdk-php
+     */
     class Mpesa{
 
+        
         /**
          * Base URL for Safaricom requests.
          * @var string
@@ -72,6 +78,13 @@ use Exception;
          * @var string
          */
         public string $till = "";
+
+        /**
+         * The JSON decoded response from a request.
+         * 
+         * @var object
+         */
+        public object $response;
 
         /**
          * The params are optional. You can set them later.
@@ -214,7 +227,7 @@ use Exception;
         }
 
         /**
-         * Throws an exception
+         * Throws an exception if the property doesn't exist
          * @param string $property property to check for
          * @param string $meaning what the property means
          * @throws \Exception
@@ -251,7 +264,6 @@ use Exception;
          * @return string
          */
         public function token(){
-
             $url = $this->baseUrl."/oauth/v1/generate?grant_type=client_credentials";
             $curl = curl_init($url);
             $credentials = base64_encode("$this->key:$this->secret");
@@ -265,7 +277,14 @@ use Exception;
         }
 
         public function reversal(){
-
+            return new Reversal([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl,
+                "credential" => $this->credential,
+                "initiator" => $this->initiator
+            ]);
         }
 
         public function b2c(){
@@ -325,6 +344,34 @@ use Exception;
                 Constant::RESULT_DESC => "Not Accepted",
                 Constant::RESULT_CODE => 1
             ]);
+        }
+
+        /**
+         * If the request returned an error response, this method returns the error object.
+         * @return RequestError|false
+         */
+        public function error(){
+            return isset($this->response->errorCode) ?
+                    new RequestError($this->response()->errorCode, 
+                    $this->response()->errorMessage) 
+                    : false;
+        }
+
+        /**
+         * True if Mpesa accepted to make the STK push, false otherwise.
+         * @return bool
+         */
+        public function success(){
+            return isset($this->response()->ResponseCode) 
+            && $this->response()->ResponseCode == 0;
+        }
+
+        /**
+         * Gets the current response object.
+         * @return object
+         */
+        public function response(){
+            return $this->response;
         }
 
         /**

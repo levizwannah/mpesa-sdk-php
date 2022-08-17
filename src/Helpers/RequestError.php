@@ -1,5 +1,5 @@
 <?php
-    namespace LeviZwannah\MpesaSdk;
+    namespace LeviZwannah\MpesaSdk\Helpers;
 
     /**
      * Represents the Request Error Response from mpesa.

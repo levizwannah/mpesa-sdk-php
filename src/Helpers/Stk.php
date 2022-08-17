@@ -1,20 +1,14 @@
 <?php
     
-    namespace LeviZwannah\MpesaSdk;
+    namespace LeviZwannah\MpesaSdk\Helpers;
 
-use Exception;
+    use Exception;
+    use LeviZwannah\MpesaSdk\Mpesa;
 
 /**
  * Stk push class
  */
     class Stk extends Mpesa{
-
-        /**
-         * The Response of the STK push
-         * 
-         * @var object
-         */
-        public object $response;
 
         /**
          * Phone number making the payment
@@ -181,29 +175,7 @@ use Exception;
             return true;
         }
 
-        public function response(){
-            return $this->response;
-        }
-
-        /**
-         * If the request returned an error response, this method returns the error object.
-         * @return RequestError|false
-         */
-        public function error(){
-            return isset($this->response->errorCode) ?
-                    new RequestError($this->response()->errorCode, 
-                    $this->response()->errorMessage) 
-                    : false;
-        }
-
-        /**
-         * True if Mpesa accepted to make the STK push, false otherwise.
-         * @return bool
-         */
-        public function success(){
-            return isset($this->response()->ResponseCode) 
-            && $this->response()->ResponseCode == 0;
-        }
+        
     }
 
 ?>
