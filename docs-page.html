@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Documentation - Mpesa SDK for PHP</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Documentation for the Elegant Mpesa SDK for PHP"
+    />
+    <meta name="author" content="Levi Kamara Zwannah" />
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome JS-->
+    <script defer src="assets/fontawesome/js/all.min.js"></script>
+
+    <!-- Plugins CSS -->
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/styles/atom-one-dark.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/plugins/simplelightbox/simple-lightbox.min.css"
+    />
+
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme.css" />
+  </head>
+
+  <body class="docs-page">
+    <header class="header fixed-top">
+      <div class="branding docs-branding">
+        <div class="container-fluid position-relative py-2">
+          <div class="docs-logo-wrapper">
+            <button
+              id="docs-sidebar-toggler"
+              class="docs-sidebar-toggler docs-sidebar-visible me-2 d-xl-none"
+              type="button"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <div class="site-logo">
+              <a class="navbar-brand" href="index.html"
+                ><img
+                  class="logo-icon me-2"
+                  src="assets/images/mpesaLogo.svg"
+                  alt="logo"
+                /><span class="logo-text"
+                  >SDK<span class="text-alt">forPHP</span></span
+                ></a
+              >
+            </div>
+          </div>
+          <!--//docs-logo-wrapper-->
+          <div
+            class="docs-top-utilities d-flex justify-content-end align-items-center"
+          >
+            <div class="top-search-box d-none d-lg-flex">
+              <form class="search-form">
+                <input
+                  type="text"
+                  placeholder="Search the docs..."
+                  name="search"
+                  class="form-control search-input"
+                />
+                <button type="submit" class="btn search-btn" value="Search">
+                  <i class="fas fa-search"></i>
+                </button>
+              </form>
+            </div>
+
+            <ul
+              class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex"
+            >
+              <li class="list-inline-item">
+                <a href="https://github.com/levizwannah/mpesa-sdk-php"
+                  ><i class="fab fa-github fa-fw"></i
+                ></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://twitter.com/ZwannahLevi"
+                  ><i class="fab fa-twitter fa-fw"></i
+                ></a>
+              </li>
+            </ul>
+            <!--//social-list-->
+            <a href="#installation" class="btn btn-primary d-none d-lg-flex"
+              >Use it</a
+            >
+          </div>
+          <!--//docs-top-utilities-->
+        </div>
+        <!--//container-->
+      </div>
+      <!--//branding-->
+    </header>
+    <!--//header-->
+
+    <div class="docs-wrapper">
+      <div id="docs-sidebar" class="docs-sidebar">
+        <div class="top-search-box d-lg-none p-3">
+          <form class="search-form">
+            <input
+              type="text"
+              placeholder="Search the docs..."
+              name="search"
+              class="form-control search-input"
+            />
+            <button type="submit" class="btn search-btn" value="Search">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+
+        <nav id="docs-nav" class="docs-nav navbar">
+          <ul class="section-items list-unstyled nav flex-column pb-3">
+            <li class="nav-item section-title">
+              <a class="nav-link scrollto active" href="#introduction"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-map-signs"></i></span
+                >Introduction</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#intro-the-sdk">The SDK</a>
+            </li>
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#installation"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-arrow-down"></i></span
+                >Installation</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#installation-composer">Using Composer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#installation-manual-download">Manual Download</a>
+            </li>
+
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#getting-started"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-cogs"></i></span
+                >Getting Started</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#getting-started-naming">Naming</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#getting-started-configure">configure</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-3-3">Section Item 3.3</a>
+            </li>
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#stk-push"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-mobile-screen"></i></span
+                >STK Push</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-4-1">Section Item 4.1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-4-2">Section Item 4.2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-4-3">Section Item 4.3</a>
+            </li>
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#b2c"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-mobile-screen"></i></span
+                >B2C</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-5-1">Section Item 5.1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-5-2">Section Item 5.2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-5-3">Section Item 5.3</a>
+            </li>
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#reversal"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-mobile-screen"></i></span
+                >Reversal</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-6-1">Section Item 6.1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-6-2">Section Item 6.2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-6-3">Section Item 6.3</a>
+            </li>
+
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#the-code"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-book-reader"></i></span
+                >The Code</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-8-1">Section Item 8.1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-8-2">Section Item 8.2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-8-3">Section Item 8.3</a>
+            </li>
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#faqs"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-lightbulb"></i></span
+                >FAQs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-9-1">Section Item 9.1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-9-2">Section Item 9.2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#item-9-3">Section Item 9.3</a>
+            </li>
+          </ul>
+        </nav>
+        <!--//docs-nav-->
+      </div>
+      <!--//docs-sidebar-->
+      <div class="docs-content">
+        <div class="container">
+          <article class="docs-article" id="introduction">
+            <header class="docs-header">
+              <h1 class="docs-heading">
+                Introduction
+                <span class="docs-time">Last updated: 2022-08-18</span>
+              </h1>
+              <section class="docs-intro">
+                <p>
+                  This SDK provides an abstraction over the Safaricom Mpesa API in PHP. Most of the routine tasks required when making a requests to the API is handled by the SDK. Using the SDK is mostly: You provide data, the SDK makes the request, and you handle the response.
+                </p>
+                <p>
+                  This Documentation teaches you how to use the various APIs provided by the SDK. It also covers the naming conventions, the code, and how to contribute. 
+                </p>
+              </section>
+              <!--//docs-intro-->
+
+              <h5>Whetting your appetite</h5>
+              <div class="docs-code-block">
+                <script src="https://gist.github.com/levizwannah/34d18c81da11110aa6885feb80d4cfbb.js"></script>
+              </div>
+        
+            </header>
+            <section class="docs-section" id="intro-the-sdk">
+              <h2 class="section-heading">The SDK</h2>
+              <p>
+                This SDK provides an elegant coding style, making it intuitive, easy to understand and use. It was developed to operate independently of other libraries. Therefore, it can be used in a standalone way without bringing other libraries along.
+              </p>
+              <p>
+                Due to lack of dependency, you can use this SDK in any PHP project: framework based or plain old vanilla PHP. This also makes it compatible with PHP 7 and above.
+              </p>
+              <p>Get it: 
+                <code>composer require levizwannah/mpesa-sdk-php</code>
+              </p>
+            </section>
+          </article>
+
+          <article class="docs-article" id="installation">
+            <header class="docs-header">
+              <h1 class="docs-heading">Installation</h1>
+
+              <div class="alert alert-warning" role="alert">
+                Requires PHP 7.4 and above
+              </div>
+              <section class="docs-intro">
+                <p>
+                  Use composer to import this SDK directly into your project. However, if you are not using composer, download the code from github and use the <code>self-autoload.php</code> file to auto load the SDK files.
+                </p>
+              </section>
+
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="installation-composer">
+              <h2 class="section-heading">Using Composer</h2>
+              <p>
+                If you are using composer, use the command below to import the SDK into your project.
+              </p>
+              <code>composer require levizwannah/mpesa-sdk-php</code>
+              <div class="callout-block callout-block-info">
+                <div class="content">
+                  <h4 class="callout-title">
+                    <span class="callout-icon-holder me-1">
+                      <i class="fas fa-info-circle"></i> </span
+                    ><!--//icon-holder-->
+                    Note
+                  </h4>
+                  <p>
+                    This is the recommended approach to import the SDK into your project.
+                    If you do not have Composer installed, get it <a href="https://getcomposer.org/">here</a>.
+                  </p>
+                </div>
+                <!--//content-->
+              </div>
+            </section>
+
+            
+            <!--//section-->
+
+            <section class="docs-section" id="installation-manual-download">
+              <h2 class="section-heading">Direct Download</h2>
+              <p>
+                If you are not using Composer, visit Github and download the zipped version of the SDK <a href="https://github.com/levizwannah/mpesa-sdk-php">here</a>. After that, extract the downloaded zip. In the extracted folder's root, you will see <code>self-autoload.php</code>. Ensure that your include this file whenever you are using the SDK.
+              </p>
+              <code>
+                
+              </code>
+              <pre>
+    &lt;?php
+      require(__DIR__ . "/path-to-extracted-file/self-autoload.php");
+
+      use LeviZwannah\MpesaSdk\Mpesa;
+
+      $mpesa = Mpesa::new();
+      ...
+    ?&gt;
+              </pre>
+            </section>
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="getting-started">
+            <header class="docs-header">
+              <h1 class="docs-heading">Getting Started</h1>
+              <section class="docs-intro">
+                <p>
+                  To use the SDK you must first ensure that all the classes are included. This can be done with an autoloader. If you are using composer, then the default <code>vendor/autoload.php</code> file will do the job. However, if you downloaded the SDK manually, then the <code>self-autoload.php</code> file will do the job. All you need to do is to include the autoloader files. 
+                </p>
+                <pre class="docs-code-block">
+&lt;?php
+    require_once(__DIR__ . "/vendor/autoload.php") // if using composer
+    //or
+    require_once(__DIR__ . "/extracted-folder/self-autoload.php") // if you manually downloaded the sdk
+?&gt;
+                </pre>
+
+                <p>
+                  The namespace for the SDK is <code>LeviZwannah\MpesaSdk</code>. The main class is the <code>Mpesa</code> class. Every API provided by Safaricom Mpesa is wrapped in a class that extends the <code>Mpesa</code> class. For example, the <code>STK</code> class is defined like this: <code>class STK extends Mpesa {...}</code>. However, to access the <code>STK</code> object, use <code>$mpesa->stk()</code> function.
+                </p>
+
+                <div class="callout-block callout-block-warning">
+                  <div class="content">
+                    <h4 class="callout-title">
+                      <span class="callout-icon-holder me-1">
+                        <i class="fas fa-bullhorn"></i> </span
+                      ><!--//icon-holder-->
+                      Warning
+                    </h4>
+                    <p>
+                      Do not create an object of the children classes directly. Always use the <code>$mpesa</code> object. Fo example, to get an <code>$stk</code> object, use <code>$mpesa->stk()</code>;
+                    </p>
+                  </div>
+
+                </div>
+
+                  <div class="callout-block callout-block-info">
+                    <div class="content">
+                      <h4 class="callout-title">
+                        <span class="callout-icon-holder me-1">
+                          <i class="fas fa-bullhorn"></i> </span
+                        ><!--//icon-holder-->
+                        Info
+                      </h4>
+                      <p>
+                        All the children classes extend the <code>Mpesa</code> class, so they have all their parent properties and functions available to them. For example, you can get a <code>$reversal</code> object from a <code>$stk</code> object using the <code>$stk->reversal()</code>. However, this is not recommended because some configurations will not be provided to the returned <code>$reversal</code> object. Therefore, always use the <code>$mpesa</code> object to get the other objects.
+                      </p>
+                    </div>
+                  </div>
+
+                  <h5>See below</h5>
+                  <div class="docs-code-block">
+                    <script src="https://gist.github.com/levizwannah/18b15032d8fc676d5cd802d50cd94383.js"></script>
+                  </div>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="getting-started-naming">
+              <h2 class="section-heading">Naming</h2>
+              <p>
+                In the SDK, every setter method has the same name as the value it is setting. For example, the setter for till number is <code>till(string $tillNumber)</code>. Therefore, to set the value of the till number you do <code>$mpesa->till("xxxxxxx");</code>. 
+              </p>
+
+              <p>
+                To keep the method names short, properties like short code are changed to <code>code</code>. Therefore, to set the business short code, use the <code>$mpesa->code("xxxxxx")</code> method. The consumer key is shortened to <code>key</code> and the consumer secret is shortened to <code>secret</code>.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="getting-started-configure">
+              <h2 class="section-heading">$mpesa->configure($config)</h2>
+              <p>
+                To provide flexibility and ease of use, the <code>configure</code> method will set the properties of the instance on which it is called. For example,
+                <code>$mpesa->configure(["key" => "consumer key", "secret" => "consumer secret"])</code> will set the $mpesa->key and $mpesa->secret properties respectively. In short, the keys of the array passed to the <code>configure</code> method represents properties of the <code>$mpesa</code> object that will be set to the corresponding values. This is also true for any subclass of the <code>Mpesa</code> class such as the <code>STK, Reversal, etc</code> classes.
+              </p>
+
+              <div class="callout-block callout-block-info">
+                <div class="content">
+                  <h4 class="callout-title">
+                    <span class="callout-icon-holder me-1">
+                      <i class="fas fa-bullhorn"></i> </span
+                    ><!--//icon-holder-->
+                    Note
+                  </h4>
+                  <p>
+                    Also remember that you can use properties to do exactly what the configure method is doing. For example, this will achieve the same as the above. <code>$mpesa->key("Consumer Key")->secret("Consumer Secret");</code>. You choose!
+                  </p>
+                </div>
+              </div>
+
+              <h5>Putting it all together</h5>
+              <div class="docs-code-block">
+                <script src="https://gist.github.com/levizwannah/313bea4e2c8e6bb1cc0fb9b62d1762d9.js"></script>
+              </div>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-3-3">
+              <h2 class="section-heading">Section Item 3.3</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="section-4">
+            <header class="docs-header">
+              <h1 class="docs-heading">Intergrations</h1>
+              <section class="docs-intro">
+                <p>
+                  Section intro goes here. Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. Quisque finibus condimentum nisl
+                  id vulputate. Praesent aliquet varius eros interdum suscipit.
+                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
+                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
+                  Fusce in malesuada odio.
+                </p>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="item-4-1">
+              <h2 class="section-heading">Section Item 4.1</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-4-2">
+              <h2 class="section-heading">Section Item 4.2</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-4-3">
+              <h2 class="section-heading">Section Item 4.3</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="section-5">
+            <header class="docs-header">
+              <h1 class="docs-heading">Utilities</h1>
+              <section class="docs-intro">
+                <p>
+                  Section intro goes here. Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. Quisque finibus condimentum nisl
+                  id vulputate. Praesent aliquet varius eros interdum suscipit.
+                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
+                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
+                  Fusce in malesuada odio.
+                </p>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="item-5-1">
+              <h2 class="section-heading">Section Item 5.1</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-5-2">
+              <h2 class="section-heading">Section Item 5.2</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-5-3">
+              <h2 class="section-heading">Section Item 5.3</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="section-6">
+            <header class="docs-header">
+              <h1 class="docs-heading">Web</h1>
+              <section class="docs-intro">
+                <p>
+                  Section intro goes here. Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. Quisque finibus condimentum nisl
+                  id vulputate. Praesent aliquet varius eros interdum suscipit.
+                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
+                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
+                  Fusce in malesuada odio.
+                </p>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="item-6-1">
+              <h2 class="section-heading">Section Item 6.1</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-6-2">
+              <h2 class="section-heading">Section Item 6.2</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-6-3">
+              <h2 class="section-heading">Section Item 6.3</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="section-7">
+            <header class="docs-header">
+              <h1 class="docs-heading">Mobile</h1>
+              <section class="docs-intro">
+                <p>
+                  Section intro goes here. Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. Quisque finibus condimentum nisl
+                  id vulputate. Praesent aliquet varius eros interdum suscipit.
+                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
+                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
+                  Fusce in malesuada odio.
+                </p>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="item-7-1">
+              <h2 class="section-heading">Section Item 7.1</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-7-2">
+              <h2 class="section-heading">Section Item 7.2</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-7-3">
+              <h2 class="section-heading">Section Item 7.3</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="section-8">
+            <header class="docs-header">
+              <h1 class="docs-heading">Resources</h1>
+              <section class="docs-intro">
+                <p>
+                  Section intro goes here. Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. Quisque finibus condimentum nisl
+                  id vulputate. Praesent aliquet varius eros interdum suscipit.
+                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
+                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
+                  Fusce in malesuada odio.
+                </p>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="item-8-1">
+              <h2 class="section-heading">Section Item 8.1</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-8-2">
+              <h2 class="section-heading">Section Item 8.2</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-8-3">
+              <h2 class="section-heading">Section Item 8.3</h2>
+              <p>
+                Vivamus efficitur fringilla ullamcorper. Cras condimentum
+                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
+                nisi, at commodo augue convallis id. Sed interdum turpis quis
+                felis bibendum imperdiet. Mauris pellentesque urna eu leo
+                gravida iaculis. In fringilla odio in felis ultricies porttitor.
+                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
+                sit amet, commodo sollicitudin est. Vestibulum ultricies
+                malesuada tempor.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <article class="docs-article" id="section-9">
+            <header class="docs-header">
+              <h1 class="docs-heading">FAQs</h1>
+              <section class="docs-intro">
+                <p>
+                  Section intro goes here. You can list all your FAQs using the
+                  format below.
+                </p>
+              </section>
+              <!--//docs-intro-->
+            </header>
+            <section class="docs-section" id="item-9-1">
+              <h2 class="section-heading">
+                Section Item 9.1 <small>(FAQ Category One)</small>
+              </h2>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>What's sit amet quam
+                eget lacinia?
+              </h5>
+              <p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+                penatibus et magnis dis parturient montes, nascetur ridiculus
+                mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+                fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo,
+                rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+                felis eu pede mollis pretium.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>How to ipsum dolor
+                sit amet quam tortor?
+              </h5>
+              <p>
+                Donec sodales sagittis magna. Sed consequat, leo eget bibendum
+                sodales, augue velit cursus nunc, quis gravida magna mi a
+                libero. Fusce vulputate eleifend sapien. Vestibulum purus quam,
+                scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan
+                lorem in dui.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>Can I bibendum
+                sodales?
+              </h5>
+              <p>
+                Fusce vulputate eleifend sapien. Vestibulum purus quam,
+                scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan
+                lorem in dui.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>Where arcu sed urna
+                gravida?
+              </h5>
+              <p>
+                Aenean et sodales nisi, vel efficitur sapien. Quisque molestie
+                diam libero, et elementum diam mollis ac. In dignissim aliquam
+                est eget ullamcorper. Sed id sodales tortor, eu finibus leo.
+                Vivamus dapibus sollicitudin justo vel fermentum. Curabitur nec
+                arcu sed urna gravida lobortis. Donec lectus est, imperdiet eu
+                viverra viverra, ultricies nec urna.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-9-2">
+              <h2 class="section-heading">
+                Section Item 9.2 <small>(FAQ Category Two)</small>
+              </h2>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>What's sit amet quam
+                eget lacinia?
+              </h5>
+              <p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+                penatibus et magnis dis parturient montes, nascetur ridiculus
+                mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+                fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo,
+                rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+                felis eu pede mollis pretium.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>How to ipsum dolor
+                sit amet quam tortor?
+              </h5>
+              <p>
+                Donec sodales sagittis magna. Sed consequat, leo eget bibendum
+                sodales, augue velit cursus nunc, quis gravida magna mi a
+                libero. Fusce vulputate eleifend sapien. Vestibulum purus quam,
+                scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan
+                lorem in dui.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>Can I bibendum
+                sodales?
+              </h5>
+              <p>
+                Fusce vulputate eleifend sapien. Vestibulum purus quam,
+                scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan
+                lorem in dui.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>Where arcu sed urna
+                gravida?
+              </h5>
+              <p>
+                Aenean et sodales nisi, vel efficitur sapien. Quisque molestie
+                diam libero, et elementum diam mollis ac. In dignissim aliquam
+                est eget ullamcorper. Sed id sodales tortor, eu finibus leo.
+                Vivamus dapibus sollicitudin justo vel fermentum. Curabitur nec
+                arcu sed urna gravida lobortis. Donec lectus est, imperdiet eu
+                viverra viverra, ultricies nec urna.
+              </p>
+            </section>
+            <!--//section-->
+
+            <section class="docs-section" id="item-9-3">
+              <h2 class="section-heading">
+                Section Item 9.3 <small>(FAQ Category Three)</small>
+              </h2>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>How to dapibus
+                sollicitudin justo vel fermentum?
+              </h5>
+              <p>
+                Donec sodales sagittis magna. Sed consequat, leo eget bibendum
+                sodales, augue velit cursus nunc, quis gravida magna mi a
+                libero. Fusce vulputate eleifend sapien. Vestibulum purus quam,
+                scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan
+                lorem in dui.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>How long bibendum
+                sodales?
+              </h5>
+              <p>
+                Fusce vulputate eleifend sapien. Vestibulum purus quam,
+                scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan
+                lorem in dui.
+              </p>
+              <h5 class="pt-3">
+                <i class="fas fa-question-circle me-1"></i>Where dapibus
+                sollicitudin?
+              </h5>
+              <p>
+                Aenean et sodales nisi, vel efficitur sapien. Quisque molestie
+                diam libero, et elementum diam mollis ac. In dignissim aliquam
+                est eget ullamcorper. Sed id sodales tortor, eu finibus leo.
+                Vivamus dapibus sollicitudin justo vel fermentum. Curabitur nec
+                arcu sed urna gravida lobortis. Donec lectus est, imperdiet eu
+                viverra viverra, ultricies nec urna.
+              </p>
+            </section>
+            <!--//section-->
+          </article>
+          <!--//docs-article-->
+
+          <footer class="footer">
+            <div class="container text-center py-5">
+              <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+              <small class="copyright"
+                >Designed with <span class="sr-only">love</span
+                ><i class="fas fa-heart" style="color: #fb866a"></i> by
+                <a
+                  class="theme-link"
+                  href="http://themes.3rdwavemedia.com"
+                  target="_blank"
+                  >Xiaoying Riley</a
+                >
+                for developers</small
+              >
+              <ul class="social-list list-unstyled pt-4 mb-0">
+                <li class="list-inline-item">
+                  <a href="#"><i class="fab fa-github fa-fw"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="fab fa-twitter fa-fw"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="fab fa-slack fa-fw"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="fab fa-product-hunt fa-fw"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="fab fa-facebook-f fa-fw"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="fab fa-instagram fa-fw"></i></a>
+                </li>
+              </ul>
+              <!--//social-list-->
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <!--//docs-wrapper-->
+
+    <!-- Javascript -->
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Page Specific JS -->
+    <script src="assets/plugins/smoothscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+    <script src="assets/js/highlight-custom.js"></script>
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script>
+    <script src="assets/js/docs.js"></script>
+  </body>
+</html>
