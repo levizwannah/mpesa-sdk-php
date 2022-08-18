@@ -4,7 +4,8 @@
 
 use BadMethodCallException;
 use Exception;
-    use LeviZwannah\MpesaSdk\Helpers\Constant;
+use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
+use LeviZwannah\MpesaSdk\Helpers\Constant;
 use LeviZwannah\MpesaSdk\Helpers\RequestError;
 use LeviZwannah\MpesaSdk\Helpers\Reversal;
     use LeviZwannah\MpesaSdk\Helpers\Stk;
@@ -288,7 +289,14 @@ use LeviZwannah\MpesaSdk\Helpers\Reversal;
         }
 
         public function b2c(){
-
+            return new BusinessToCustomer([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl,
+                "credential" => $this->credential,
+                "initiator" => $this->initiator
+            ]);
         }
 
         public function urls(){

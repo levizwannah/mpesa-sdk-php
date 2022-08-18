@@ -49,7 +49,7 @@
         public string $type = Constant::BUSINESS;
 
         /**
-         * 
+         * You should not call this directly. Use $mpesa->b2c()
          * @param array $config
          */
         public function __construct(array $config)
