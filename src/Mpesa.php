@@ -2,12 +2,12 @@
 
     namespace LeviZwannah\MpesaSdk;
 
-use BadMethodCallException;
-use Exception;
-use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
-use LeviZwannah\MpesaSdk\Helpers\Constant;
-use LeviZwannah\MpesaSdk\Helpers\RequestError;
-use LeviZwannah\MpesaSdk\Helpers\Reversal;
+    use BadMethodCallException;
+    use Exception;
+    use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
+    use LeviZwannah\MpesaSdk\Helpers\Constant;
+    use LeviZwannah\MpesaSdk\Helpers\RequestError;
+    use LeviZwannah\MpesaSdk\Helpers\Reversal;
     use LeviZwannah\MpesaSdk\Helpers\Stk;
 
     /**
@@ -369,7 +369,7 @@ use LeviZwannah\MpesaSdk\Helpers\Reversal;
          * True if Mpesa accepted to make the STK push, false otherwise.
          * @return bool
          */
-        public function success(){
+        public function accepted(){
             return isset($this->response()->ResponseCode) 
             && $this->response()->ResponseCode == 0;
         }
