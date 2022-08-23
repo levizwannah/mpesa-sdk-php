@@ -85,7 +85,7 @@
          * 
          * @var object
          */
-        public object $response;
+        public ?object $response = null;
 
         /**
          * The params are optional. You can set them later.
@@ -376,9 +376,13 @@
 
         /**
          * Gets the current response object.
-         * @return object
          */
-        public function response(){
+        public function response($response = null){
+            if($response){
+                $this->response = $response;
+                return $this;
+            }
+
             return $this->response;
         }
 
