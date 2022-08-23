@@ -165,7 +165,7 @@
               <a class="nav-link scrollto" href="#getting-started-configure">configure</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-3-3">Section Item 3.3</a>
+              <a class="nav-link scrollto" href="#getting-started-common">Common methods</a>
             </li>
             <li class="nav-item section-title mt-3">
               <a class="nav-link scrollto" href="#stk-push"
@@ -175,13 +175,13 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-4-1">Section Item 4.1</a>
+              <a class="nav-link scrollto" href="#stk-push-till">With Till Number</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-4-2">Section Item 4.2</a>
+              <a class="nav-link scrollto" href="#stk-push-paybill">With Paybill Number</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-4-3">Section Item 4.3</a>
+              <a class="nav-link scrollto" href="#stk-push-chaining-configure">Chaining vs Configure</a>
             </li>
             <li class="nav-item section-title mt-3">
               <a class="nav-link scrollto" href="#b2c"
@@ -382,10 +382,9 @@
                       Warning
                     </h4>
                     <p>
-                      Do not create an object of the children classes directly. Always use the <code>$mpesa</code> object. Fo example, to get an <code>$stk</code> object, use <code>$mpesa->stk()</code>;
+                      Do not create an object of the children classes directly. Always use the <code>$mpesa</code> object. For example, to get an <code>$stk</code> object, use <code>$mpesa->stk()</code>;
                     </p>
                   </div>
-
                 </div>
 
                   <div class="callout-block callout-block-info">
@@ -397,7 +396,7 @@
                         Info
                       </h4>
                       <p>
-                        All the children classes extend the <code>Mpesa</code> class, so they have all their parent properties and functions available to them. For example, you can get a <code>$reversal</code> object from a <code>$stk</code> object using the <code>$stk->reversal()</code>. However, this is not recommended because some configurations will not be provided to the returned <code>$reversal</code> object. Therefore, always use the <code>$mpesa</code> object to get the other objects.
+                        All the subclasses extend the <code>Mpesa</code> class, so they have all their parent's properties and functions available to them. For example, you can get a <code>$reversal</code> object from a <code>$stk</code> object using the <code>$stk->reversal()</code>. However, this is not recommended because some configurations will not be provided to the returned <code>$reversal</code> object. Therefore, always use the <code>$mpesa</code> object to get the other objects.
                       </p>
                     </div>
                   </div>
@@ -412,7 +411,7 @@
             <section class="docs-section" id="getting-started-naming">
               <h2 class="section-heading">Naming</h2>
               <p>
-                In the SDK, every setter method has the same name as the value it is setting. For example, the setter for till number is <code>till(string $tillNumber)</code>. Therefore, to set the value of the till number you do <code>$mpesa->till("xxxxxxx");</code>. 
+                In the SDK, every setter method has the same name as the value it is setting. For example, the setter for till number is <code>till(string $tillNumber)</code>. Therefore, to set the value of the till number you use <code>$mpesa->till("xxxxxxx");</code>. 
               </p>
 
               <p>
@@ -437,7 +436,7 @@
                     Note
                   </h4>
                   <p>
-                    Also remember that you can use properties to do exactly what the configure method is doing. For example, this will achieve the same as the above. <code>$mpesa->key("Consumer Key")->secret("Consumer Secret");</code>. You choose!
+                    Also remember that you can use properties to do exactly what the configure method is doing. For example, this will achieve the same result as the above: <code>$mpesa->key("Consumer Key")->secret("Consumer Secret");</code>. You choose!
                   </p>
                 </div>
               </div>
@@ -449,80 +448,110 @@
             </section>
             <!--//section-->
 
-            <section class="docs-section" id="item-3-3">
-              <h2 class="section-heading">Section Item 3.3</h2>
+            <section class="docs-section" id="getting-started-common">
+              <h2 class="section-heading">Common methods</h2>
               <p>
-                Vivamus efficitur fringilla ullamcorper. Cras condimentum
-                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
-                nisi, at commodo augue convallis id. Sed interdum turpis quis
-                felis bibendum imperdiet. Mauris pellentesque urna eu leo
-                gravida iaculis. In fringilla odio in felis ultricies porttitor.
-                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
-                sit amet, commodo sollicitudin est. Vestibulum ultricies
-                malesuada tempor.
+                For flexibility and openness, there are methods that can be used as standalone in the SDK. These methods are from the <code>Mpesa</code> class therefore is available to every subclass. For example, you can develop a custom class that extends the SDK's <code>Mpesa</code> class or maybe use some individual functionalities to achieve something different. this section covers the common methods.
+              </p>
+
+              <div class="callout-block callout-block-warning">
+                <div class="content">
+                  <h4 class="callout-title">
+                    <span class="callout-icon-holder me-1">
+                      <i class="fas fa-bullhorn"></i> </span
+                    ><!--//icon-holder-->
+                    Note
+                  </h4>
+                  <p>
+                    Most of the common methods require that the consumer key, consumer secret, and environment of the <code>$mpesa</code> object be set before they can work correctly. You can use the <code>$mpesa->configure(array $config)</code> method to set them or rather use the properties.
+                  </p>
+                </div>
+              </div>
+
+              <h4>$mpesa->token()</h4>
+              <p>This method returns the Mpesa access token based on the <code>$mpesa->env</code> value. If the environment is sandbox, then you get a sandbox access token, otherwise, you get a live token.
+              </p>
+
+              <h4>$mpesa->request(array $data, string $path)</h4>
+              <p>This method abstracts the making of request to the Safaricom Mpesa server. It firstly request an access token before making the request, sending along with it the access token. The first argument of the method is an associative array containing key-value pairs of the data to send. The second argument is a string containing the REST path to the service you want to use. For example, to make an Stk push request, the path will be <code>"/mpesa/stkpush/v1/processrequest"</code>. This method returns the JSON decoded response from Safaricom Mpesa server. Hence, it returns an <code>Object</code>.
+              </p>
+
+              <h4>$mpesa->error()</h4>
+              <p>
+                This method returns <code>RequestError</code> or false if the <code>$mpesa->response</code> object contains an <code>errorCode</code> field -- checking if the request to Mpesa was successful. Please note that if you use the <code>$mpesa->request()</code> function, you must manually set the response of the <code>$mpesa</code> object like so <code>$mpesa->response($response)</code>. A <code>RequestError</code> object contains two field, <code>$error->code</code>: The error code and <code>$error->message</code>: The error message.
+              </p>
+
+              <h4>$mpesa->accepted()</h4>
+              <p>
+                This method checks if the mpesa request was accepted for processing. When a request is accepted for processing, the response code of the response is 0. Hence, this method checks if the response code is 0. Again, this is similar to <code>$mpesa->error()</code> and requires that a response object be set.
+              </p>
+
+              <h4>Mpesa::data($asArray = false)</h4>
+              <p>
+                This function will return the json decoded data from the Safaricom Mpesa request in your callback handler. The returned data can be an object or an associative array based on the <code>$asArray</code> parameter.
               </p>
             </section>
             <!--//section-->
           </article>
           <!--//docs-article-->
 
-          <article class="docs-article" id="section-4">
+          <article class="docs-article" id="stk-push">
             <header class="docs-header">
-              <h1 class="docs-heading">Intergrations</h1>
+              <h1 class="docs-heading">STK Push</h1>
               <section class="docs-intro">
                 <p>
-                  Section intro goes here. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit. Quisque finibus condimentum nisl
-                  id vulputate. Praesent aliquet varius eros interdum suscipit.
-                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
-                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
-                  Fusce in malesuada odio.
+                  This section teaches you how to make STK push using the SDK. This will be mostly through code and comments in the code. All the properties of an <code>Stk</code> object can be set using the <code>$stk->configure($config)</code> method. Also, all the properties can be chained when used as setters. All STK pushes require a phone number, an amount, and a callback URL. The callback URL must be a full url.
                 </p>
+                <div class="callout-block callout-block-info">
+                  <div class="content">
+                    <h4 class="callout-title">
+                      <span class="callout-icon-holder me-1">
+                        <i class="fas fa-bullhorn"></i> </span
+                      ><!--//icon-holder-->
+                      Note
+                    </h4>
+                    <p>
+                      Every STK push requires a transaction ID: <code>CustomerBuyGoodsOnline</code> or <code>CustomerPaybillOnline</code>. The difference between the two is that, if the type is <code>CustomerBuyGoodsOnline</code>, then you need to have a till number set before calling the <code>$stk->push()</code> method. To set the transaction ID, call <code>$stk->buygoods()</code> or <code>$stk->paybill()</code>.
+                    </p>
+                  </div>
+                </div>
               </section>
               <!--//docs-intro-->
             </header>
-            <section class="docs-section" id="item-4-1">
-              <h2 class="section-heading">Section Item 4.1</h2>
+            <section class="docs-section" id="stk-push-till">
+              <h2 class="section-heading">STK push for Till Numbers</h2>
               <p>
-                Vivamus efficitur fringilla ullamcorper. Cras condimentum
-                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
-                nisi, at commodo augue convallis id. Sed interdum turpis quis
-                felis bibendum imperdiet. Mauris pellentesque urna eu leo
-                gravida iaculis. In fringilla odio in felis ultricies porttitor.
-                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
-                sit amet, commodo sollicitudin est. Vestibulum ultricies
-                malesuada tempor.
+                When making an STK push request for a till number, you are not required to set the reference (the account number). The transaction description is always optional. However, you must set the till number as well ensure that <code>$stk->buygoods()</code> is called before calling the push method.
               </p>
+              <h4>Let the code speak for itself</h4>
+                <div class="docs-code-block">
+                  <script src="https://gist.github.com/levizwannah/0d75710c5b86d39060fb718076045b17.js"></script>
+                </div>
             </section>
             <!--//section-->
 
-            <section class="docs-section" id="item-4-2">
-              <h2 class="section-heading">Section Item 4.2</h2>
+            <section class="docs-section" id="stk-push-paybill">
+              <h2 class="section-heading">STK push for Paybill Numbers</h2>
               <p>
-                Vivamus efficitur fringilla ullamcorper. Cras condimentum
-                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
-                nisi, at commodo augue convallis id. Sed interdum turpis quis
-                felis bibendum imperdiet. Mauris pellentesque urna eu leo
-                gravida iaculis. In fringilla odio in felis ultricies porttitor.
-                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
-                sit amet, commodo sollicitudin est. Vestibulum ultricies
-                malesuada tempor.
+                In the real world, paybill payments require an account number. You can set that here using <code>$stk->reference("account number")</code> -- defaults to <code>"payment"</code>. The transaction description is always optional. Paybill STK pushes do not require a till number, but you must ensure that you call <code>$stk->paybill()</code> before calling the push method.
               </p>
+              <h4>Let the code speak for itself</h4>
+              <div class="docs-code-block">
+                <script src="https://gist.github.com/levizwannah/d378be75ab2b33afdb4f1eb6b4806c25.js"></script>
+              </div>
             </section>
             <!--//section-->
 
-            <section class="docs-section" id="item-4-3">
-              <h2 class="section-heading">Section Item 4.3</h2>
+            <section class="docs-section" id="stk-push-chaining-configure">
+              <h2 class="section-heading">Chaining vs Configure</h2>
               <p>
-                Vivamus efficitur fringilla ullamcorper. Cras condimentum
-                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
-                nisi, at commodo augue convallis id. Sed interdum turpis quis
-                felis bibendum imperdiet. Mauris pellentesque urna eu leo
-                gravida iaculis. In fringilla odio in felis ultricies porttitor.
-                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
-                sit amet, commodo sollicitudin est. Vestibulum ultricies
-                malesuada tempor.
+                You can always use the configure method. This has been said 1M times throughout this documentation. All you need is to ensure that the keys in the configuration array match the properties you are trying to set. Also, you can use method chaining to do all the work in one line of code.
               </p>
+
+              <h4>Let the code speak for itself</h4>
+              <div class="docs-code-block">
+                <script src="https://gist.github.com/levizwannah/9b521c5f5639f39af433e37346f545e1.js"></script>
+              </div>
             </section>
             <!--//section-->
           </article>
