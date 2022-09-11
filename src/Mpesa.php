@@ -9,6 +9,7 @@
     use LeviZwannah\MpesaSdk\Helpers\RequestError;
     use LeviZwannah\MpesaSdk\Helpers\Reversal;
     use LeviZwannah\MpesaSdk\Helpers\Stk;
+use LeviZwannah\MpesaSdk\Helpers\UrlManager;
 
     /**
      * Main Mpesa Class
@@ -277,6 +278,10 @@
             return json_decode($response)->access_token;      
         }
 
+        /**
+         * Returns a partially configured Reversal Object
+         * @return Reversal
+         */
         public function reversal(){
             return new Reversal([
                 "key" => $this->key,
@@ -288,6 +293,10 @@
             ]);
         }
 
+        /**
+         * Returns a partially configured B2C Object.
+         * @return BusinessToCustomer
+         */
         public function b2c(){
             return new BusinessToCustomer([
                 "key" => $this->key,
@@ -299,8 +308,15 @@
             ]);
         }
 
+        /**
+         * Returns a partially configured UrlManager to register URLs.
+         * @return UrlManager
+         */
         public function urls(){
-
+            return new UrlManager([
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl
+            ]);
         }
 
         public function c2b(){

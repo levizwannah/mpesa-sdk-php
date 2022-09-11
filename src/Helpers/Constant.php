@@ -25,6 +25,10 @@
         const SALARY = "SalaryPayment";
         const BUSINESS = "BusinessPayment";
         const PROMOTION = "PromotionPayment";
+
+        // Register URLs
+        const URL_COMPLETE = "Complete";
+        const URL_CANCELLED = "Cancelled";
     }
 
 ?>
