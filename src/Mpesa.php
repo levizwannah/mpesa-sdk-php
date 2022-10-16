@@ -9,7 +9,8 @@
     use LeviZwannah\MpesaSdk\Helpers\RequestError;
     use LeviZwannah\MpesaSdk\Helpers\Reversal;
     use LeviZwannah\MpesaSdk\Helpers\Stk;
-use LeviZwannah\MpesaSdk\Helpers\UrlManager;
+    use LeviZwannah\MpesaSdk\Helpers\Traits\FieldToPropertyTrait;
+    use LeviZwannah\MpesaSdk\Helpers\UrlManager;
 
     /**
      * Main Mpesa Class
@@ -17,7 +18,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
      */
     class Mpesa{
 
-        
+        use FieldToPropertyTrait;
         /**
          * Base URL for Safaricom requests.
          * @var string
