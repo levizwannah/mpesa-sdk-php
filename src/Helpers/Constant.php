@@ -27,7 +27,7 @@
         const PROMOTION = "PromotionPayment";
 
         // Register URLs
-        const URL_COMPLETE = "Complete";
+        const URL_COMPLETE = "Completed";
         const URL_CANCELLED = "Cancelled";
     }
 
