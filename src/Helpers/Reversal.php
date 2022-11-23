@@ -68,7 +68,7 @@
          * 
          */
         public function transId(string $transactionId){
-            $this->transactionId = $transactionId;
+            $this->transId = $transactionId;
             return $this;
         }
 

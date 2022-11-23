@@ -88,7 +88,7 @@ class UrlManager extends Mpesa{
             "ValidationURL" => $this->validation
         ];
 
-        $this->response = $this->request($data, "/mpesa/c2b/v1/registerurl");
+        $this->response = $this->request($data, "/mpesa/c2b/v2/registerurl");
         return $this;   
     }
 }

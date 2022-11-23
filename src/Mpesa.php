@@ -316,7 +316,10 @@
         public function urls(){
             return new UrlManager([
                 "code" => $this->code,
-                "baseUrl" => $this->baseUrl
+                "baseUrl" => $this->baseUrl,
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "env" => Constant::LIVE
             ]);
         }
 
