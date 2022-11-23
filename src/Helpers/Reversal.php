@@ -158,7 +158,7 @@
                 "TransactionID" => $this->transId,
                 "Amount" => $this->amount,
                 "ReceiverParty" => $this->code,
-                "ReceiverIdentifierType" => $this->type,
+                "RecieverIdentifierType" => $this->type,
                 "ResultURL" => $this->resultUrl,
                 "QueueTimeOutURL" => $this->timeoutUrl,
                 "Remarks" => $this->remarks,
