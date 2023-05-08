@@ -116,6 +116,7 @@
         {
            return new Mpesa($key, $secret, $env);
         }
+        
 
         /**
          * Sets the configuration of the Mpesa object. You can pass any number of keys. 

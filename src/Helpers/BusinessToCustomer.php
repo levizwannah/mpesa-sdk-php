@@ -71,10 +71,7 @@
          * 
          */
         public function phone(string $phone){
-            if($phone[0] == "+") $phone = substr($phone, 1);
-            if($phone[0] == "0") $phone = substr($phone, 1);
-            if($phone[0] == "7") $phone = "254" . $phone;
-
+            $phone = "254" . substr($phone, -9);
             $this->phone = $phone;
             return $this;
         }
