@@ -424,6 +424,64 @@
             header("Content-Type: application/json");
         }
 
+        /**
+         * Return an array of the valid Mpesa IP addresses
+         * @return array
+         */
+        public function ips(){
+            return [
+                "196.201.214.200",
+                "196.201.214.206",
+                "196.201.213.114",
+                "196.201.214.207",
+                "196.201.214.208",
+                "196.201.213.44",
+                "196.201.212.127",
+                "196.201.212.128",
+                "196.201.212.129",
+                "196.201.212.132",
+                "196.201.212.136",
+                "196.201.212.138",
+                "196.201.212.69",
+                "196.201.212.74"
+            ];
+        }
+
+        /**
+         * Gets the client IP
+         * @return array
+         */
+        public function clientIp(){
+
+            if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)){
+                return  
+                array_values( 
+                    array_filter( 
+                        explode(',',$_SERVER['HTTP_X_FORWARDED_FOR']) 
+                    ) 
+                );
+            }
+            
+            if (array_key_exists('REMOTE_ADDR', $_SERVER)) { 
+                    return [ $_SERVER["REMOTE_ADDR"] ]; 
+            }
+            
+            if (array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
+                    return [ $_SERVER["HTTP_CLIENT_IP"] ]; 
+            } 
+        
+            return '';
+        }
+
+        /**
+         * verifies that the callback is from Mpesa Server
+         * @return bool
+         */
+        public function verifyOrigin(){
+            if(empty($this->clientIp())) return false;
+
+            return ! empty( array_intersect($this->clientIp(), $this->ips()) );
+        }
     }
 
 ?>
