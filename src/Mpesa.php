@@ -428,7 +428,7 @@
          * Return an array of the valid Mpesa IP addresses
          * @return array
          */
-        public function ips(){
+        public static function ips(){
             return [
                 "196.201.214.200",
                 "196.201.214.206",
@@ -451,7 +451,7 @@
          * Gets the client IP
          * @return array
          */
-        public function clientIp(){
+        public static function clientIps(){
 
             if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)){
                 return  
@@ -477,10 +477,10 @@
          * verifies that the callback is from Mpesa Server
          * @return bool
          */
-        public function verifyOrigin(){
-            if(empty($this->clientIp())) return false;
+        public static function verifyOrigin(){
+            if(empty(static::clientIps())) return false;
 
-            return ! empty( array_intersect($this->clientIp(), $this->ips()) );
+            return ! empty( array_intersect(static::clientIps(), static::ips()) );
         }
     }
 
