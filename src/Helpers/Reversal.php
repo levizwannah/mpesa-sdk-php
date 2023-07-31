@@ -52,6 +52,7 @@
          * @var string
          */
         public string $type = "11";
+        
         /**
          * Do not call this directly.
          * use $mpesa->reversal()
