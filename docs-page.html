@@ -183,6 +183,21 @@
             <li class="nav-item">
               <a class="nav-link scrollto" href="#stk-push-chaining-configure">Chaining vs Configure</a>
             </li>
+            
+            <li class="nav-item section-title mt-3">
+              <a class="nav-link scrollto" href="#reversal"
+                ><span class="theme-icon-holder me-2"
+                  ><i class="fas fa-mobile-screen"></i></span
+                >Reversal</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#reversal-1">Initialization</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="#reversal-2">Making Reversal</a>
+            </li>
+
             <li class="nav-item section-title mt-3">
               <a class="nav-link scrollto" href="#b2c"
                 ><span class="theme-icon-holder me-2"
@@ -198,22 +213,6 @@
             </li>
             <li class="nav-item">
               <a class="nav-link scrollto" href="#item-5-3">Section Item 5.3</a>
-            </li>
-            <li class="nav-item section-title mt-3">
-              <a class="nav-link scrollto" href="#reversal"
-                ><span class="theme-icon-holder me-2"
-                  ><i class="fas fa-mobile-screen"></i></span
-                >Reversal</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-6-1">Section Item 6.1</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-6-2">Section Item 6.2</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link scrollto" href="#item-6-3">Section Item 6.3</a>
             </li>
 
             <li class="nav-item section-title mt-3">
@@ -557,48 +556,65 @@
           </article>
           <!--//docs-article-->
 
-          <article class="docs-article" id="section-5">
+          <article class="docs-article" id="reversal">
             <header class="docs-header">
-              <h1 class="docs-heading">Utilities</h1>
+              <h1 class="docs-heading">Reversal</h1>
               <section class="docs-intro">
                 <p>
-                  Section intro goes here. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit. Quisque finibus condimentum nisl
-                  id vulputate. Praesent aliquet varius eros interdum suscipit.
-                  Donec eu purus sed nibh convallis bibendum quis vitae turpis.
-                  Duis vestibulum diam lorem, vitae dapibus nibh facilisis a.
-                  Fusce in malesuada odio.
+                  In this section, we cover how to make reversal using the SDK.
                 </p>
+
+                <p>
+                  The Safaricom reversal API uses an initiator name and security credentials. Unfortunately, the api doesn't convert your initiator password to the required security credential. Therefore, you should use the Daraja security credential generator to generate your Security credential from your Initiator password.
+                </p>
+
+                <div class="callout-block callout-block-info">
+                  <div class="content">
+                    <h4 class="callout-title">
+                      <span class="callout-icon-holder me-1">
+                        <i class="fas fa-info-circle"></i> </span
+                      ><!--//icon-holder-->
+                      Note
+                    </h4>
+                    <p>
+                      You must provide your initiator name and your security credential to use the reversal SDK. Please contact <a href="mailto:apisupport@safaricom.co.ke">Safaricom API Support</a> for more information.
+                    </p>
+                  </div>
+                  <!--//content-->
+                </div>
               </section>
               <!--//docs-intro-->
             </header>
-            <section class="docs-section" id="item-5-1">
-              <h2 class="section-heading">Section Item 5.1</h2>
+            <section class="docs-section" id="reversal-1">
+              <h2 class="section-heading">Initialization for the Reversal SDK</h2>
               <p>
-                Vivamus efficitur fringilla ullamcorper. Cras condimentum
-                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
-                nisi, at commodo augue convallis id. Sed interdum turpis quis
-                felis bibendum imperdiet. Mauris pellentesque urna eu leo
-                gravida iaculis. In fringilla odio in felis ultricies porttitor.
-                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
-                sit amet, commodo sollicitudin est. Vestibulum ultricies
-                malesuada tempor.
+                To initialize the reversal SDK, you need to set the credential and the initiator. You can use method chaining or the configure function as shown below.
               </p>
+
+              <div class="docs-code-block">
+                <script src="https://gist.github.com/levizwannah/7443c6f12dd744cd9e69d706caa4b12d.js"></script>
+              </div>
             </section>
             <!--//section-->
 
-            <section class="docs-section" id="item-5-2">
-              <h2 class="section-heading">Section Item 5.2</h2>
+            <section class="docs-section" id="reversal-2">
+              <h2 class="section-heading">Making a Reversal</h2>
               <p>
-                Vivamus efficitur fringilla ullamcorper. Cras condimentum
-                condimentum mauris, vitae facilisis leo. Aliquam sagittis purus
-                nisi, at commodo augue convallis id. Sed interdum turpis quis
-                felis bibendum imperdiet. Mauris pellentesque urna eu leo
-                gravida iaculis. In fringilla odio in felis ultricies porttitor.
-                Donec at purus libero. Vestibulum libero orci, commodo nec arcu
-                sit amet, commodo sollicitudin est. Vestibulum ultricies
-                malesuada tempor.
+                To make a reversal, the following parameters are required:
               </p>
+              <ul>
+                <li>transId - The mpesa transaction ID</li>
+                <li>amount - The amount paid</li>
+                <li>resultUrl - To what URL should Mpesa send the result. The result tells you whether or not the reversal was successful</li>
+                <li>timeoutUrl - Incase your reversal request times out, where should Mpesa send the notification. This can help your system react appropriately</li>
+                <li>type - The organization type. Defaults to 11. <div class="badge bg-warning">Don't touch it.</div></li>
+                <li>remarks - Any remarks (string)</li>
+                <li>occasion - Any occasion (string)</li>
+              </ul>
+
+              <div class="docs-code-block">
+                <script src="https://gist.github.com/levizwannah/f366c63822f0a3c44fd22b5fc8ac5df4.js"></script>
+              </div>
             </section>
             <!--//section-->
 
@@ -621,7 +637,7 @@
 
           <article class="docs-article" id="section-6">
             <header class="docs-header">
-              <h1 class="docs-heading">Web</h1>
+              <h1 class="docs-heading">Business 2 Customers</h1>
               <section class="docs-intro">
                 <p>
                   Section intro goes here. Lorem ipsum dolor sit amet,
