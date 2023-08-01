@@ -134,6 +134,10 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         public function configure(array $config){
             foreach($config as $key => $val){
                 $this->$key = $val;
+
+                if($key === 'env') {
+                    $this->baseUrl = ($this->env === Constant::SANDBOX) ? "https://sandbox.safaricom.co.ke" : "https://api.safaricom.co.ke";
+                }
             }
             return $this;
         }
@@ -270,6 +274,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
          * @return string
          */
         public function token(){
+            
             $url = $this->baseUrl."/oauth/v1/generate?grant_type=client_credentials";
             $curl = curl_init($url);
             $credentials = base64_encode("$this->key:$this->secret");
@@ -277,8 +282,9 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    
+            
             $response = curl_exec($curl);
+
             return json_decode($response)->access_token;      
         }
 
