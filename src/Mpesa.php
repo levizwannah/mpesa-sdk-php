@@ -4,7 +4,9 @@
 
     use BadMethodCallException;
     use Exception;
-    use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
+use LeviZwannah\MpesaSdk\Helpers\AccountBalance;
+use LeviZwannah\MpesaSdk\Helpers\BusinessToBusiness;
+use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
     use LeviZwannah\MpesaSdk\Helpers\Constant;
     use LeviZwannah\MpesaSdk\Helpers\RequestError;
     use LeviZwannah\MpesaSdk\Helpers\Reversal;
@@ -289,7 +291,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * Returns a partially configured Reversal Object
+         * Returns a partially configured Reversal Object for making reversals
          * @return Reversal
          */
         public function reversal(){
@@ -304,7 +306,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * Returns a partially configured B2C Object.
+         * Returns a partially configured B2C Object for Business to customer payments.
          * @return BusinessToCustomer
          */
         public function b2c(){
@@ -319,7 +321,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * Returns a partially configured UrlManager to register URLs.
+         * Returns a partially configured UrlManager to register URLs for C2B
          * @return UrlManager
          */
         public function urls(){
@@ -332,16 +334,44 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
             ]);
         }
 
+        /**
+         * Returns a partially configured UrlManager to register URLs for C2B
+         * @return UrlManager
+         */
         public function c2b(){
-
+            return $this->urls();
         }
 
+        /**
+         * Returns a partially configured BusinessToBusiness Object for making
+         * Business to business payments.
+         * @return BusinessToBusiness
+         */
         public function b2b(){
-
+            return new BusinessToBusiness([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl,
+                "credential" => $this->credential,
+                "initiator" => $this->initiator
+            ]);
         }
 
+        /**
+         * Returns a partially configured AccountBalance Object for
+         * make account balance queries.
+         * @return AccountBalance
+         */
         public function balance(){
-
+            return new AccountBalance([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl,
+                "credential" => $this->credential,
+                "initiator" => $this->initiator
+            ]);
         }
 
         /**

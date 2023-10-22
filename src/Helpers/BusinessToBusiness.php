@@ -1,18 +1,13 @@
 <?php
+namespace LeviZwannah\MpesaSdk\Helpers;
 
-    namespace LeviZwannah\MpesaSdk\Helpers;
+class BusinessToBusiness extends MpesaWithInitiator {
 
-/**
- * Represents the B2C transaction
- * @package levizwannah/mpesa-sdk-php
- */
-class BusinessToCustomer extends MpesaWithInitiator{
-       
     /**
-     * Phone number of the customer
+     * Receiver Short code
      * @var string
      */
-    public string $phone;
+    public string $receiver;
 
     /**
      * Amount that was paid.
@@ -20,6 +15,19 @@ class BusinessToCustomer extends MpesaWithInitiator{
      */
     public int $amount;
 
+
+    /**
+     * The customer on whose behalf the money
+     * is paid.
+     * @var string
+     */
+    public string $requester = "";
+
+    /**
+     * The account number
+     * @var string
+     */
+    public string $account = "default";
 
     /**
      * The result URL
@@ -46,7 +54,10 @@ class BusinessToCustomer extends MpesaWithInitiator{
      */
     public string $occasion = "business payment";
 
-    public string $type = Constant::BUSINESS;
+    /**
+     * Command ID
+     */
+    public string $type = Constant::BUSINESS_BUYGOODS;
 
     /**
      * You should not call this directly. Use $mpesa->b2c()
@@ -60,19 +71,43 @@ class BusinessToCustomer extends MpesaWithInitiator{
     public function configure(array $config)
     {
         parent::configure($config);
-        if(isset($config["phone"])) $this->phone($config["phone"]);
+        if(isset($config["requester"])) $this->requester($config["requester"]);
         return $this;
     }
 
     /**
-     * Sets the phone to pay to.
+     * @param int $number Paybill or Till Number
+     */
+    public function receiver($number) {
+        $this->receiver = $number;
+        return $this;
+    }
+
+    /**
+     * @param string $number The account Number of paybill
+     */
+    public function account(string $number) {
+        $this->account = $number;
+        return $this;
+    }
+
+    /**
+     * @param string $number The account Number of paybill
+     */
+    public function reference(string $number) {
+        $this->account = $number;
+        return $this;
+    }
+
+    /**
+     * Sets the customer phone number on behalf of whom you are paying.
      * Accepts 07xxxxxxxx, +2547xxxxxxxxx, or 2547xxxxxxxxx
      * @param string $phone
      * 
      */
-    public function phone(string $phone){
+    public function requester(string $phone){
         $phone = "254" . substr($phone, -9);
-        $this->phone = $phone;
+        $this->requester = $phone;
         return $this;
     }
 
@@ -127,7 +162,7 @@ class BusinessToCustomer extends MpesaWithInitiator{
     }
 
     /**
-     * Sets the type. Must be one of: SalaryPayment, BusinessPayment, PromotionPayment
+     * Sets the type. Must be one of: BusinessBuyGoods or BusinessPayBill
      * @param string $type
      * 
      */
@@ -137,35 +172,29 @@ class BusinessToCustomer extends MpesaWithInitiator{
     }
 
     /**
-     * Sets type to salary payment
+     * Sets the type to Business BuyGoods
      */
-    public function salary() {
-        return $this->type(Constant::SALARY);
+    public function buygoods() {
+        return $this->type(Constant::BUSINESS_BUYGOODS);
     }
 
     /**
-     * Sets type to promotion payment
+     * Sets the type to Business Paybill
      */
-    public function promotion() {
-        return $this->type(Constant::PROMOTION);
-    }
-
-    /**
-     * Sets type to business payment
-     */
-    public function payment() {
-        return $this->type(Constant::BUSINESS);
+    public function paybill() {
+        return $this->type(Constant::BUSINESS_PAYBILL);
     }
 
     public function okay()
     {
         parent::okay();
-        $this->assertExists("phone", "Phone Number");
+        $this->assertExists("receiver", "Receiver Paybill/Till");
         $this->assertExists("amount", "Amount");
         $this->assertExists("type", "Type of Payment");
         $this->assertExists("resultUrl", "Result URL");
         $this->assertExists("timeoutUrl", "Timeout URL");
         $this->assertExists("remarks", "Remarks");
+        $this->assertExists("account", "Account Number");
 
         return true;
     }
@@ -180,22 +209,26 @@ class BusinessToCustomer extends MpesaWithInitiator{
             "InitiatorName" => $this->initiator,
             "SecurityCredential" => $this->credential,
             "CommandID" => $this->type,
+            "SenderIdentifierType" => 4,
+            "RecieverIdentifierType" => 4,
             "Amount" => $this->amount,
             "PartyA" => $this->code,
-            "PartyB" => $this->phone,
+            "PartyB" => $this->receiver,
+            "AccountReference" => $this->account,
+            "Requester" => $this->requester,
             "ResultURL" => $this->resultUrl,
             "QueueTimeOutURL" => $this->timeoutUrl,
             "Remarks" => $this->remarks,
             "Occasion" => $this->occasion 
         ];
 
-        $this->response = $this->request($data, "/mpesa/b2c/v1/paymentrequest");
+        $this->response = $this->request($data, "/mpesa/b2b/v1/paymentrequest");
 
         return $this;
     }
 
     /**
-     * Makes the B2C request and returns the response.
+     * Makes the B2B request and returns the response.
      * @return object
      */
     public function __invoke()
@@ -203,7 +236,4 @@ class BusinessToCustomer extends MpesaWithInitiator{
         $this->pay();
         return $this->response();
     }
-        
 }
-
-?>

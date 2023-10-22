@@ -27,7 +27,7 @@
          * The account Reference
          * @var string
          */
-        public string $reference = "payment";
+        public string $reference = "default";
 
         /**
          * Callback Url
@@ -89,12 +89,22 @@
         }
 
         /**
-         * Sets the transaction reference
-         * @param string $reference
+         * Sets the account number
+         * @param string $number
          * 
          */
-        public function reference(string $reference){
-            $this->reference = $reference;
+        public function reference(string $number){
+            $this->reference = $number;
+            return $this;
+        }
+
+        /**
+         * Sets the account number for paybill
+         * @param string $number
+         * 
+         */
+        public function account(string $number){
+            $this->reference = $number;
             return $this;
         }
 

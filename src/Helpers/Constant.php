@@ -29,6 +29,13 @@
         // Register URLs
         const URL_COMPLETE = "Completed";
         const URL_CANCELLED = "Cancelled";
+
+        // B2B
+        const BUSINESS_PAYBILL = "BusinessPayBill";
+        const BUSINESS_BUYGOODS = "BusinessBuyGoods";
+
+        // Account Balance
+        const ACCOUNT_BALANCE = "AccountBalance";
     }
 
 ?>
