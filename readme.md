@@ -8,7 +8,7 @@ A **Clean, Elegant, and Independent** PHP SDK for interacting with Safaricom Dar
 And then start using it.
 
 ## not using composer
-Download the zip version of the code. Write your own autoloader for the `LeviZwannah\MpesaSdk` namespace or include the file manually. It's better to just include all the files at once because the main class `LeviZwannah\MpesaSdk\Mpesa` uses all the other classes.
+Download the zip version of the code. Include the `self-autoload.php` file located in the downloaded `src` folder.
 
 # Documentation
 ## Setting Up
