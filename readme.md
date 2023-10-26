@@ -55,12 +55,12 @@ $mpesa->key("consumer-key")
       ->initiator("levizwannah") // optional
       ->credential("levi-cred++=="); // optional
 ```
-Every object for interacting with a specific API extends the parent Mpesa object. Therefore, the same rule applies to them. You can use a config array and the configure method or just use the individual setter methods using method chaining.  
+Every object for interacting with a specific API extends the parent Mpesa object. Therefore, the same rule applies to them. You can use a config array and the configure method or just use the individual setter methods.  
 
->**Warning**: Do not directly create an object from a child class, always use the mpesa object to get the child object as you will see below.  
+>**Warning**: Do not directly create an object from a child class, always use the mpesa object to get the child object as you will see later in the doc.  
 
 ### Environment
-You can use the `'env'` key in the `$config` array or the `env("env")` method to set the environment to either `live` or `sandbox`. By default, the environment is `"live"`. There is a `Constant` class to save you from writing the literal strings.
+You can use the `'env'` key in the `$config` array or the `env("env")` method to set the environment. The environment value can be `live` or `sandbox`. By default, the environment is `"live"`. There is a `Constant` class to save you from writing the literal strings.
 
 ```php
 //...other code
