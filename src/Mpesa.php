@@ -8,7 +8,8 @@ use LeviZwannah\MpesaSdk\Helpers\AccountBalance;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToBusiness;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
     use LeviZwannah\MpesaSdk\Helpers\Constant;
-    use LeviZwannah\MpesaSdk\Helpers\RequestError;
+use LeviZwannah\MpesaSdk\Helpers\RemitTax;
+use LeviZwannah\MpesaSdk\Helpers\RequestError;
     use LeviZwannah\MpesaSdk\Helpers\Reversal;
     use LeviZwannah\MpesaSdk\Helpers\Stk;
     use LeviZwannah\MpesaSdk\Helpers\Traits\FieldToPropertyTrait;
@@ -349,6 +350,22 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
          */
         public function b2b(){
             return new BusinessToBusiness([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl,
+                "credential" => $this->credential,
+                "initiator" => $this->initiator
+            ]);
+        }
+
+        /**
+         * Returns a partially configured RemitTax Object for making
+         * KRA tax remittance using Mpesa.
+         * @return RemitTax
+         */
+        public function remitTax(){
+            return new RemitTax([
                 "key" => $this->key,
                 "secret" => $this->secret,
                 "code" => $this->code,

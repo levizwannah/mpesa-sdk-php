@@ -59,6 +59,8 @@ class BusinessToBusiness extends MpesaWithInitiator {
      */
     public string $type = Constant::BUSINESS_BUYGOODS;
 
+    protected string $resourcePath = "/mpesa/b2b/v1/paymentrequest";
+
     /**
      * You should not call this directly. Use $mpesa->b2c()
      * @param array $config
@@ -222,7 +224,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
             "Occasion" => $this->occasion 
         ];
 
-        $this->response = $this->request($data, "/mpesa/b2b/v1/paymentrequest");
+        $this->response = $this->request($data, $this->resourcePath);
 
         return $this;
     }

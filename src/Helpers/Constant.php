@@ -33,6 +33,8 @@
         // B2B
         const BUSINESS_PAYBILL = "BusinessPayBill";
         const BUSINESS_BUYGOODS = "BusinessBuyGoods";
+        const KRA_TAX = "PayTaxToKRA";
+        const KRA_PAYBILL = "572572";
 
         // Account Balance
         const ACCOUNT_BALANCE = "AccountBalance";
