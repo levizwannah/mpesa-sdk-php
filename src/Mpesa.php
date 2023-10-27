@@ -453,7 +453,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * True if Mpesa accepted to make the STK push, false otherwise.
+         * True if Mpesa accepted the request, false otherwise.
          * @return bool
          */
         public function accepted(){

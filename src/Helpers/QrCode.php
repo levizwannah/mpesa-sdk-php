@@ -2,16 +2,8 @@
 namespace LeviZwannah\MpesaSdk\Helpers;
 
 use LeviZwannah\MpesaSdk\Mpesa;
-/*
-{    
-   "MerchantName":"TEST SUPERMARKET",
-   "RefNo":"Invoice Test",
-   "Amount":1,
-   "TrxCode":"BG",
-   "CPI":"373132",
-   "Size":"300"
-}
-*/
+
+
 class QrCode extends Mpesa {
  
     public string $merchantName;
@@ -72,6 +64,18 @@ class QrCode extends Mpesa {
     }
 
     /**
+     * Sets the phone to pay to.
+     * Accepts 07xxxxxxxx, +2547xxxxxxxxx, or 2547xxxxxxxxx
+     * @param string $phone
+     * 
+     */
+    protected function phone(string $phone){
+        $phone = "254" . substr(preg_replace("/\s+/", "", $phone), -9);
+        $this->receiver = $phone;
+        return $this;
+    }
+
+    /**
      * Sets the TrxCode to BG, meaning buy goods.
      */
     public function buygoods() {
@@ -122,6 +126,15 @@ class QrCode extends Mpesa {
         $this->assertExists('size');
         $this->assertExists('type', 'Transaction Type');
         $this->assertExists('reference', 'Reference Number');
+        $this->assertExists('amount', "Amount");
+    }
+
+    /**
+     * True if Mpesa accepted the request, false otherwise.
+     * @return bool
+     */
+    public function accepted(){
+        return isset($this->response()->ResponseCode); 
     }
 
     /**
@@ -130,6 +143,28 @@ class QrCode extends Mpesa {
      */
     public function generate() {
         $this->okay();
+        
+        if($this->type === "SM") {
+            $this->phone($this->receiver);
+        }
+
+        $data = [
+            "MerchantName" => $this->merchantName,
+            "RefNo" => $this->reference,
+            "Amount" => $this->amount,
+            "TrxCode" => $this->type,
+            "CPI" => $this->receiver,
+            "Size" => $this->amount
+        ];
+
+        $this->response = $this->request($data, "/mpesa/qrcode/v1/generate");
+        return $this;
+    }
+
+    public function __invoke()
+    {
+        $this->generate();
+        return $this->response();
     }
 }
 

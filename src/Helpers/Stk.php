@@ -73,7 +73,7 @@
          * 
          */
         public function phone(string $phone){
-            $phone = "254" . substr($phone, -9);
+            $phone = "254" . substr(preg_replace("/\s+/", "", $phone), -9);
             $this->phone = $phone;
             return $this;
         }
