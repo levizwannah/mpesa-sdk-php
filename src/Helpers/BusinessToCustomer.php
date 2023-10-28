@@ -48,6 +48,8 @@ class BusinessToCustomer extends MpesaWithInitiator{
 
     public string $type = Constant::BUSINESS;
 
+    protected string $resourcePath = "/mpesa/b2c/v1/paymentrequest";
+
     /**
      * You should not call this directly. Use $mpesa->b2c()
      * @param array $config
@@ -171,7 +173,7 @@ class BusinessToCustomer extends MpesaWithInitiator{
     }
 
     /**
-     * Makes the B2B request to Mpesa
+     * Makes the B2C request to Mpesa
      */
     public function pay(){
         $this->okay();
@@ -189,7 +191,11 @@ class BusinessToCustomer extends MpesaWithInitiator{
             "Occasion" => $this->occasion 
         ];
 
-        $this->response = $this->request($data, "/mpesa/b2c/v1/paymentrequest");
+        if($this->env === Constant::SANDBOX) {
+            $this->resourcePath = "/mpesa/b2c/v3/paymentrequest";
+        }
+
+        $this->response = $this->request($data, $this->resourcePath);
 
         return $this;
     }

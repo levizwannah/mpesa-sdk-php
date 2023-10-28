@@ -68,6 +68,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
     public function __construct(array $config)
     {
         $this->configure($config);
+
     }
 
     public function configure(array $config)
@@ -108,7 +109,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
      * 
      */
     public function requester(string $phone){
-        $phone = "254" . substr($phone, -9);
+        $phone = "254" . substr(preg_replace("/\s+/", "", $phone), -9);
         $this->requester = $phone;
         return $this;
     }

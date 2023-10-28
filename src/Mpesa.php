@@ -8,6 +8,7 @@ use LeviZwannah\MpesaSdk\Helpers\AccountBalance;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToBusiness;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
     use LeviZwannah\MpesaSdk\Helpers\Constant;
+use LeviZwannah\MpesaSdk\Helpers\QrCode;
 use LeviZwannah\MpesaSdk\Helpers\RemitTax;
 use LeviZwannah\MpesaSdk\Helpers\RequestError;
     use LeviZwannah\MpesaSdk\Helpers\Reversal;
@@ -376,7 +377,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * Returns a partially configured AccountBalance Object for
+         * Returns a partially configured AccountBalance Object to
          * make account balance queries.
          * @return AccountBalance
          */
@@ -417,6 +418,19 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
                 "passkey" => $this->passkey,
                 "code" => $this->code,
                 "till" => $this->till,
+                "baseUrl" => $this->baseUrl
+            ]);
+        }
+
+        /**
+         * Gets the configured QrCode Object
+         * @return QrCode
+         */
+        public function qr(){
+            return new QrCode([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
                 "baseUrl" => $this->baseUrl
             ]);
         }

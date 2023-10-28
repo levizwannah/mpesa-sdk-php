@@ -7,11 +7,21 @@ use LeviZwannah\MpesaSdk\Mpesa;
 class QrCode extends Mpesa {
  
     public string $merchantName;
-    public string $reference;
+    public string $reference = 'invoice';
     public $amount;
     protected string $type;
     public $receiver;
     public $size = 300;
+
+    /**
+     * Do not call this directly.
+     * use $mpesa->qr()
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->configure($config);
+    }
 
     /**
      * Sets the merchant name

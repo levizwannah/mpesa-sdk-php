@@ -168,17 +168,10 @@ $stk = $mpesa->stk();
 
 $stk->phone('0724786543')
     ->amount(1)
-    ->buygoods()
+    ->buygoods() // for till numbers
+    ->paybill() // for paybill numbers
     ->callback('https://my-domain.com/path/to/callback')
-    ->push();
-
-// for paybill numbers
-// change buygoods() to paybill()
-// by default, it's paybill() anyway
-$stk->phone('0724786543')
-    ->amount(1)
-    ->paybill()
-    ->callback('https://my-domain.com/path/to/callback')
+    ->description('optional description') // optional
     ->push();
 
 // check if the request was accepted by mpesa.
@@ -317,6 +310,8 @@ $reverser->timeoutUrl('https://my.url/path/to/reversal/timeout')
         ->resultUrl('https://my.url/path/to/reversal/result')
         ->transId('1X1Y1ZNME') // transaction ID to reverse
         ->amount(100) // amount paid
+        ->remarks('optional remarks') // optional
+        ->occasion('optional occasion') // optional
         ->make();
 
 if(!$reversal->accepted()) {
@@ -354,6 +349,8 @@ $query = $mpesa->query();
 $query->transId('1X1Y1ZNME')
       ->resultUrl('https://my.url/path/to/timeout')
       ->timeoutUrl('https://my.url/path/to/result')
+      ->remarks('optional remarks') // optional
+      ->occasion('optional occasion') // optional
       ->make();
 
 if(!$query->accepted()) {
@@ -378,12 +375,223 @@ Ensure these values were set as shown in the setup section:
 - Consumer Secret(`secret`)
 - Business Short Code (`code`);
 
+### Usage
+See the below code snippet
+```php
+//...setup...
 
+$balance = $mpesa->balance();
+
+$balance->timeoutUrl('https://my.url/path/to/timeout')
+        ->resultUrl('https://my.url/path/to/result')
+        ->remarks('optional remarks') // optional
+        ->check();
+
+if(!$balance->accepted()){
+  $error = $balance->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $balance->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+```
 ## B2B API
-## B2C API
-## Tax Remittance API
-## Dynamic QR Code API
+The B2B API allows you to make payments to paybill or till numbers
+from your business short code.
 
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+### Usage
+Look at the code snippet below
+```php
+// ...setup...
+$b2b = $mpesa->b2b();
+$b2b->amount(100)
+    ->receiver('123456') // business you are paying to
+    ->resultUrl('https://my.url/path/to/result')
+    ->timeoutUrl('https://my.url/path/to/timeout');
+
+# if receiver is a paybill number
+$b2b->paybill() // if receiver is a paybill number
+    ->account('account-number'); 
+
+# if receiver is a till number
+$b2b->buygoods(); // if receiver is a till number
+
+# optional
+$b2b->remarks('optional remarks') // optional
+    ->occasion('optional occasion') // optional
+    ->requester('0712345678'); // optional - the customer on
+                               // whose behalf the money is
+                               // being paid.
+
+# make payment
+$b2b->pay();
+
+if(!$b2b->accepted()) {
+  $error = $b2b->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $b2b->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+//... save to db, etc
+```
+## B2C API
+The B2C API allows you to make payments mobile numbers
+from your business short code.
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+### Usage
+See the code snippet below:
+```php
+$b2c = $mpesa->b2c();
+
+$b2c->amount(100)
+    ->phone('0712345678')
+    ->resultUrl('https://my.url/path/to/result')
+    ->timeoutUrl('https://my.url/path/to/timeout');
+
+# set payment purpose
+$b2c->salary() // for salary payment
+    ->promotion() // for promotion payment
+    ->payment(); // for business payment
+
+# optional
+$b2c->remarks('optional-remarks')
+    ->occasion('optional-occasion');
+
+# pay
+$b2c->pay();
+
+if(!$b2c->accepted()) {
+  $error = $b2c->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $b2c->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+//... save to db, etc
+
+```
+## Tax Remittance API
+The Tax Remittance API allows you to make Tax payment to KRA
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+### Usage
+See the code snippet below
+```php
+// ...setup...
+
+$remit = $mpesa->remitTax();
+
+$remit->amount(1000)
+      ->resultUrl('https://my.url/path/to/result')
+      ->timeoutUrl('https://my.url/path/to/timeout')
+      ->remarks('optional-remarks') // optional
+      ->pay();
+
+if(!$remit->accepted()) {
+  $error = $remit->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $remit->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+//... save to db, etc
+
+```
+## Dynamic QR Code API
+Enables you to generate QR Code for different transactions. Please see the Daraja documentation
+
+`
+Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have My Safaricom App or M-PESA app, to scan and capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.` -- Daraja
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`)
+
+### Usage
+See the snippet below
+```php
+//...setup...
+$qr = $mpesa->qr();
+
+$qr->size(300) // QR Code size (300x300)
+   ->merchantName('Business Name')
+   ->reference('account-number') // transaction reference
+   ->amount(100);
+
+# the receiver of the payment
+# can be Till Number, Agent number, phone number
+# paybill number, or business number
+# Correspond to CPI in the Daraja doc
+$qr->receiver('123457');
+
+# sets the receiver type
+# corresponds to TrxCode in the Daraja Doc
+$qr->buygoods(); // receiver is a till number
+$qr->paybill(); // receiver is a paybill number
+$qr->sendMoney(); // receiver is a phone number
+$qr->withdraw(); // receiver is an agent number
+$qr->sendToBusiness(); // receiver is a business number
+
+# generate code
+$qr->generate();
+
+if(!$qr->accepted()) {
+  $error = $qr->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $qr->response();
+$qrCode = $response->QRCode;
+$requestId = $response->RequestID;
+//...
+```
 
 # Reporting Errors
 Please open an issue in case there is a bug found.
+
+# Show Love
+- Star this repository
+- if you love it, buy me coffee.
