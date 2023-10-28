@@ -8,7 +8,9 @@ use LeviZwannah\MpesaSdk\Helpers\AccountBalance;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToBusiness;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
     use LeviZwannah\MpesaSdk\Helpers\Constant;
-    use LeviZwannah\MpesaSdk\Helpers\RequestError;
+use LeviZwannah\MpesaSdk\Helpers\QrCode;
+use LeviZwannah\MpesaSdk\Helpers\RemitTax;
+use LeviZwannah\MpesaSdk\Helpers\RequestError;
     use LeviZwannah\MpesaSdk\Helpers\Reversal;
     use LeviZwannah\MpesaSdk\Helpers\Stk;
     use LeviZwannah\MpesaSdk\Helpers\Traits\FieldToPropertyTrait;
@@ -359,7 +361,23 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * Returns a partially configured AccountBalance Object for
+         * Returns a partially configured RemitTax Object for making
+         * KRA tax remittance using Mpesa.
+         * @return RemitTax
+         */
+        public function remitTax(){
+            return new RemitTax([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
+                "baseUrl" => $this->baseUrl,
+                "credential" => $this->credential,
+                "initiator" => $this->initiator
+            ]);
+        }
+
+        /**
+         * Returns a partially configured AccountBalance Object to
          * make account balance queries.
          * @return AccountBalance
          */
@@ -389,6 +407,10 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
             ]);
         }
 
+        /**
+         * Gets the configured Stk Object
+         * @return Stk
+         */
         public function stk(){
             return new Stk([
                 "key" => $this->key,
@@ -396,6 +418,19 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
                 "passkey" => $this->passkey,
                 "code" => $this->code,
                 "till" => $this->till,
+                "baseUrl" => $this->baseUrl
+            ]);
+        }
+
+        /**
+         * Gets the configured QrCode Object
+         * @return QrCode
+         */
+        public function qr(){
+            return new QrCode([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "code" => $this->code,
                 "baseUrl" => $this->baseUrl
             ]);
         }
@@ -429,6 +464,17 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
          * @return RequestError|false
          */
         public function error(){
+            if(
+                !$this->accepted() && isset(
+                    $this->response()->ResponseCode
+                )
+            ) {
+                return new RequestError(
+                    $this->response()->ResponseCode, 
+                    $this->response()->ResponseDescription ?? "Unknown error description"
+                );
+            }
+
             return isset($this->response->errorCode) ?
                     new RequestError($this->response()->errorCode, 
                     $this->response()->errorMessage) 
@@ -436,7 +482,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
         }
 
         /**
-         * True if Mpesa accepted to make the STK push, false otherwise.
+         * True if Mpesa accepted the request, false otherwise.
          * @return bool
          */
         public function accepted(){

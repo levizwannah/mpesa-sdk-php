@@ -80,7 +80,13 @@ class UrlManager extends Mpesa{
     }
 
     public function register(){
+        
+        if(empty($this->validation)) {
+            $this->validation = $this->confirmation;
+        }
+
         $this->okay();
+        
         $data = [
             "ShortCode" => $this->code,
             "ResponseType" => $this->type,
