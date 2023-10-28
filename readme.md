@@ -177,14 +177,70 @@ $checkoutRequestId = $response->checkoutRequestID;
 
 //...
 ```
+Notice that the difference between using Till number and paybill number is the use of `paybill()` and `buygoods()` methods before calling the `push()` method. Also, ensure that `till` value is set when using Till numbers.
 
 ## C2B URLs Registration API
+Enables you to register your C2B urls. The SDK also provides an easy response method for your confirmation and validation scripts.
+> The validation url is not required unless you explicitly ask the Mpesa team to enable it for you.  
+
+> This API requires the consumer key (`key`), consumer secret (`secret`), and business short code (`code`) to be set when making request.
+
+### Registration
+
+Look at the code snippet below.
+```php
+// ...setup...
+// c2b url registration
+$urls = $mpesa->urls();
+
+$urls->confirmation('https://my.url/path/to/confirmation')
+     ->validation('https://my.url/path/to/validation') // optional
+     ->register();
+
+if(!$urls->accepted()) {
+  $error = $urls->error();
+  echo "Error: $error->code - $error->message";
+  // exit;
+}
+
+```
+### Handler helpers
+When Mpesa sends a payload to your confirmation or validation URLs, you need to send a formatted confirmation or denial payload. You can use the SDKs static methods for that. See below.
+
+```php
+require('path/to/vendor/autoload.php');
+
+use LeviZwannah\MpesaSdk\Mpesa;
+
+# confirmation.url
+
+// your code ...
+Mpesa::confirm();
+// your code...
+
+#================#
+
+# validation.url
+
+// your code ...
+if(!true) {
+    Mpesa::deny();
+}
+else {
+    Mpesa::confirm();
+}
+
+// your code ...
+
+```
+> Note: You can only use `Mpesa::deny()` in the validation handler. 
 ## Reversal API
 ## Transaction Query API
 ## Balance Query API
 ## B2B API
 ## B2C API
 ## Tax Remittance API
+## Dynamic QR Code API
 
 
 # Reporting Errors
