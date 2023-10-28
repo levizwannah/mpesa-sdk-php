@@ -3,6 +3,7 @@
         "BUYGOODS",
         "PAYBILL",
         "paybills",
-        "qrcode"
+        "qrcode",
+        "stkpushquery"
     ]
 }

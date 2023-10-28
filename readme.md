@@ -52,6 +52,7 @@ $mpesa->key("consumer-key")
       ->secret("consumer-secret")
       ->code(12345)
       ->till(67891) // optional
+      ->passkey('stk-passkey') // optional
       ->initiator("levizwannah") // optional
       ->credential("levi-cred++=="); // optional
 ```
@@ -146,8 +147,16 @@ In the **result** payload that will be sent to your callbacks, these keys will b
 
 ## Mpesa Express (STK Push) API
 Used for initiating STK Push requests. 
-> Remember this could throw an exception. Check the exceptions section under Setting up.
 
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+- Till Number (`till`) *For till numbers*
+- Passkey (`passkey`)
+
+### Usage
 ```php
 //..setup...
 
@@ -155,8 +164,7 @@ $stk = $mpesa->stk();
 
 // for till numbers
 // ensure that the till number is set during setup
-// or set it up using the below code
-// $stk->till(123455)
+// or set it up using $stk->till(123455)
 
 $stk->phone('0724786543')
     ->amount(1)
@@ -190,11 +198,53 @@ $checkoutRequestId = $response->checkoutRequestID;
 ```
 Notice that the difference between using Till number and paybill number is the use of `paybill()` and `buygoods()` methods before calling the `push()` method. Also, ensure that `till` value is set when using Till numbers.
 
+## Mpesa Express STK Query
+Use for querying the status of STK push requests. This is different from normal transaction status queries.
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+- Passkey (`passkey`)
+- Till (`till`) for till accounts
+
+### Usage
+See the code snippet below
+```php
+//...setup...
+
+$query = $mpesa->stk()->query();
+
+$query->checkoutId('checkout-request-id')
+      ->paybill() // for paybill number
+      ->buygoods() // for till numbers
+      ->make();
+
+// check if it's not accepted
+if(!$query->accepted()){
+  $error = $query->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $query->response();
+$resultCode = $response->ResultCode;
+$merchantId = $response->MerchantRequestID;
+// ...
+```
+> **Note**: Use `paybill()` if you are querying an STK request made for a paybill number, otherwise use `buygoods()`. By default, it queries for STK requests made for paybill numbers.  
+
 ## C2B URLs Registration API
 Enables you to register your C2B urls. The SDK also provides an easy response method for your confirmation and validation scripts.
-> The validation url is not required unless you explicitly ask the Mpesa team to enable it for you.  
 
-> This API requires the consumer key (`key`), consumer secret (`secret`), and business short code (`code`) to be set when making request.
+> The `validation url` is not required unless you explicitly ask the Mpesa team to enable it for you.  
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
 
 ### Registration
 
@@ -228,6 +278,7 @@ use LeviZwannah\MpesaSdk\Mpesa;
 // your code ...
 Mpesa::confirm();
 // your code...
+// send SMS ... etc
 
 #================#
 
@@ -294,6 +345,7 @@ Ensure these values were set as shown in the setup section:
 - Consumer Secret(`secret`)
 - Business Short Code (`code`);
 
+### Usage
 See the code snippet below on how to use this SDK.
 ```php
 // Transaction query
@@ -315,8 +367,18 @@ $originatorId = $response->OriginatorConversationID;
 $conversationId = $response->ConversationID;
 //...
 ```
-
 ## Balance Query API
+The balance Query API allows you to query the balance in a business account.
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+
 ## B2B API
 ## B2C API
 ## Tax Remittance API

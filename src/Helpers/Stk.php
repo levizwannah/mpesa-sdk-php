@@ -59,6 +59,21 @@
             $this->configure($config);
         }
 
+        /**
+         * Gets the configured StkQuery Object
+         * @return StkQuery
+         */
+        public function query(){
+            return new StkQuery([
+                "key" => $this->key,
+                "secret" => $this->secret,
+                "passkey" => $this->passkey,
+                "code" => $this->code,
+                "till" => $this->till,
+                "baseUrl" => $this->baseUrl
+            ]);
+        }
+
         public function configure(array $config)
         {
             parent::configure($config);
@@ -134,11 +149,19 @@
             return $this;
         }
 
+        /**
+         * Sets the callback URL
+         * @param string $callback
+         * 
+         */
         public function callback(string $callback){
             $this->callback = $callback;
             return $this;
         }
 
+        /**
+         * Makes the STK push
+         */
         public function push(){
             $this->okay();
 
@@ -160,6 +183,9 @@
             ];
 
             $this->response = $this->request($data, "/mpesa/stkpush/v1/processrequest");
+            
+            $this->response->Timestamp = $timestamp;
+
             return $this;
         }
 

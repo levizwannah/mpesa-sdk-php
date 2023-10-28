@@ -25,7 +25,7 @@ class AccountBalance extends MpesaWithInitiator {
     /**
      * Command ID
      */
-    public string $type = Constant::ACCOUNT_BALANCE;
+    protected string $type = Constant::ACCOUNT_BALANCE;
 
     /**
      * You should not call this directly. Use $mpesa->b2c()
@@ -66,20 +66,10 @@ class AccountBalance extends MpesaWithInitiator {
         return $this;
     }
 
-    /**
-     * Sets the type. Must be one of: BusinessBuyGoods or BusinessPayBill
-     * @param string $type
-     * 
-     */
-    protected function type(string $type){
-        $this->type = $type;
-        return $this;
-    }
-
     public function okay()
     {
         parent::okay();
-        $this->assertExists("type", "Type of Payment");
+        $this->assertExists("type", "Type/CommandID");
         $this->assertExists("resultUrl", "Result URL");
         $this->assertExists("timeoutUrl", "Timeout URL");
         $this->assertExists("remarks", "Remarks");

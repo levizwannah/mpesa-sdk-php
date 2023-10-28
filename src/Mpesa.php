@@ -406,6 +406,10 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
             ]);
         }
 
+        /**
+         * Gets the configured Stk Object
+         * @return Stk
+         */
         public function stk(){
             return new Stk([
                 "key" => $this->key,
