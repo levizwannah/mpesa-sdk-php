@@ -133,6 +133,17 @@ $result = Mpesa::data();
 
 //...
 ```
+## Handling Callback Payloads
+> Note: **Response** represents what your get from Mpesa when you make a request. **Result** is the payload sent to your callback URLs.
+
+### Payload format
+Please refer to the Daraja documentation at https://developer.safaricom.co.ke to see the expected payload. For forward compatibility, the SDK doesn't alter the responses or payload from Mpesa.
+
+### The confusing part
+In every **response**, there will be unique keys. For example, the `MerchantRequestID` and  `CheckoutRequestID` in the STK push response, and the `OriginatorConversationID` and `ConversationID` in the other APIs responses. These keys identify the transaction on Mpesa. Save these keys in your database or some storage alongside the pending transaction. 
+
+In the **result** payload that will be sent to your callbacks, these keys will be present. Therefore, you can use them to update the corresponding transactions in your storage or database.
+
 ## Mpesa Express (STK Push) API
 Used for initiating STK Push requests. 
 > Remember this could throw an exception. Check the exceptions section under Setting up.
@@ -204,7 +215,7 @@ if(!$urls->accepted()) {
 }
 
 ```
-### Handler helpers
+### Callback helpers
 When Mpesa sends a payload to your confirmation or validation URLs, you need to send a formatted confirmation or denial payload. You can use the SDKs static methods for that. See below.
 
 ```php
@@ -233,9 +244,78 @@ else {
 // your code ...
 
 ```
-> Note: You can only use `Mpesa::deny()` in the validation handler. 
+> Note: You can only use `Mpesa::deny()` in the validation handler.
+
 ## Reversal API
+Enables you to make Reversals of Mpesa Transactions.
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+See the code snippet on how to use this SDK.
+```php
+// ...setup...
+
+$reversal = $mpesa->reversal();
+
+$reverser->timeoutUrl('https://my.url/path/to/reversal/timeout')
+        ->resultUrl('https://my.url/path/to/reversal/result')
+        ->transId('1X1Y1ZNME') // transaction ID to reverse
+        ->amount(100) // amount paid
+        ->make();
+
+if(!$reversal->accepted()) {
+  $error = $reversal->error();
+  echo "$error->code - $error->message";
+  // exit;
+}
+
+// reversal initiated
+$response = $reversal->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+```
+> In your callbacks scripts, please ensure to follow the recommendation in the **security section** of this doc.
+
 ## Transaction Query API
+The Transaction query API enable you to check the statuses of transactions made to or by your business short code.
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+See the code snippet below on how to use this SDK.
+```php
+// Transaction query
+$query = $mpesa->query();
+
+$query->transId('1X1Y1ZNME')
+      ->resultUrl('https://my.url/path/to/timeout')
+      ->timeoutUrl('https://my.url/path/to/result')
+      ->make();
+
+if(!$query->accepted()) {
+  $error = $query->error();
+  echo "$error->code - $error->message";
+  // exit;
+}
+
+$response = $query->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+```
+
 ## Balance Query API
 ## B2B API
 ## B2C API

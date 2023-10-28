@@ -446,6 +446,17 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
          * @return RequestError|false
          */
         public function error(){
+            if(
+                !$this->accepted() && isset(
+                    $this->response()->ResponseCode
+                )
+            ) {
+                return new RequestError(
+                    $this->response()->ResponseCode, 
+                    $this->response()->ResponseDescription ?? "Unknown error description"
+                );
+            }
+
             return isset($this->response->errorCode) ?
                     new RequestError($this->response()->errorCode, 
                     $this->response()->errorMessage) 
