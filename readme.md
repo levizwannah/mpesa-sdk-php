@@ -18,7 +18,7 @@ Firstly create an Mpesa object with the necessary configurations.
 
 *If you are using a till number, then the `till` key is required, otherwise only the business short code is required.*  
 
-> Note: *The business short code is the same as the Paybill number. For till numbers, it is different.*  
+> Note: *The business shortcode is the same as the Paybill number. For till numbers, it is different.*  
 
 ```php
 require('path/to/vendor/autoload.php');
@@ -31,6 +31,7 @@ $config = [
   "code" => "12345", // business short code
   
   "till" => "67891", // optional till number
+  "passkey" => "xxxx", // optional passkey
   "initiator" => "levizwannah", // optional initiator name
   "credential" => "levi-cred++=="  // optional security credential
 ]
