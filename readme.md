@@ -423,16 +423,16 @@ $b2b->amount(100)
     ->timeoutUrl('https://my.url/path/to/timeout');
 
 # if receiver is a paybill number
-$b2b->paybill() // if receiver is a paybill number
+$b2b->paybill()
     ->account('account-number'); 
 
 # if receiver is a till number
-$b2b->buygoods(); // if receiver is a till number
+$b2b->buygoods();
 
 # optional
-$b2b->remarks('optional remarks') // optional
-    ->occasion('optional occasion') // optional
-    ->requester('0712345678'); // optional - the customer on
+$b2b->remarks('optional remarks')
+    ->occasion('optional occasion')
+    ->requester('0712345678'); // the customer on
                                // whose behalf the money is
                                // being paid.
 
