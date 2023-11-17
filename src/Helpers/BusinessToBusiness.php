@@ -209,7 +209,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
         $this->okay();
 
         $data = [
-            "InitiatorName" => $this->initiator,
+            "Initiator" => $this->initiator,
             "SecurityCredential" => $this->credential,
             "CommandID" => $this->type,
             "SenderIdentifierType" => 4,
