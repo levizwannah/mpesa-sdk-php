@@ -94,6 +94,8 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
          */
         public ?object $response = null;
 
+        public $payload = [];
+
         /**
          * The params are optional. You can set them later.
          * @param string $key consumer key
@@ -259,6 +261,7 @@ use LeviZwannah\MpesaSdk\Helpers\UrlManager;
          */
         public function request(array $data, string $route){
             $token = $this->token();
+            $this->payload($data);
             
             $curl = curl_init($this->baseUrl . $route);
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Content-Type: application/json",
