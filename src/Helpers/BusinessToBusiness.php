@@ -61,6 +61,8 @@ class BusinessToBusiness extends MpesaWithInitiator {
 
     protected string $resourcePath = "/mpesa/b2b/v1/paymentrequest";
 
+    protected $identifierType = 4;
+
     /**
      * You should not call this directly. Use $mpesa->b2c()
      * @param array $config
@@ -178,6 +180,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
      * Sets the type to Business BuyGoods
      */
     public function buygoods() {
+        $this->identifierType = 2;
         return $this->type(Constant::BUSINESS_BUYGOODS);
     }
 
@@ -185,6 +188,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
      * Sets the type to Business Paybill
      */
     public function paybill() {
+        $this->identifierType = 4;
         return $this->type(Constant::BUSINESS_PAYBILL);
     }
 
@@ -213,7 +217,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
             "SecurityCredential" => $this->credential,
             "CommandID" => $this->type,
             "SenderIdentifierType" => 4,
-            "RecieverIdentifierType" => 4,
+            "RecieverIdentifierType" => $this->identifierType,
             "Amount" => $this->amount,
             "PartyA" => $this->code,
             "PartyB" => $this->receiver,
