@@ -307,7 +307,13 @@ class Mpesa
 
         $response = curl_exec($curl);
 
-        return json_decode($response)->access_token;
+        $obj = json_decode($response);
+
+        if(is_null($obj)) {
+            throw new Exception("Unable to access Mpesa Gateway");
+        }
+
+        return $obj->access_token;
     }
 
     /**
