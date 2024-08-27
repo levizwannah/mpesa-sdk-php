@@ -1,7 +1,10 @@
 # Mpesa SDK for PHP
 A **Clean, Elegant, and Independent** PHP SDK for interacting with Safaricom Daraja APIs. The SDK is purely object-oriented and easy to understand and use. It has no dependency and hence can be used in any PHP project: plain or framework-based.
+
 # Requirement
 - PHP version >= 7.4
+- You have read the documentation of the Daraja API: This SDK mainly abstracts everything for you and makes it easy to integrate M-Pesa. So, ensure you have looked at the Daraja documentation. Not to understand it, but just know what data are being sent and received. That makes it easy to understand this SDK.
+
 ## Get it with Composer
 ```composer require levizwannah/mpesa-sdk-php```
 
@@ -14,7 +17,7 @@ Download the zip version of the code. Include the `self-autoload.php` file locat
 ## Setting Up
 Firstly create an Mpesa object with the necessary configurations.  
 
-**The consumer key, consumer secret, and business short code is always required.**  
+**The consumer key, consumer secret, and business short code are always required.**  
 
 *If you are using a till number, then the `till` key is required, otherwise only the business short code is required.*  
 
@@ -588,6 +591,51 @@ $qrCode = $response->QRCode;
 $requestId = $response->RequestID;
 //...
 ```
+
+## Business To Bulk API
+This API enables you to load funds from a working account directly to a utility account for B2C payments.
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Initiator name (`initiator`)
+- Security credential (`credential`)
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+### Usage
+```php
+// ...setup...
+$btb = $mpesa->btb();
+$btb->amount(100)
+    ->receiver('123456') // short code of the receiver 
+    ->resultUrl('https://my.url/path/to/result')
+    ->timeoutUrl('https://my.url/path/to/timeout');
+
+# optional
+$btb->remarks('optional remarks') // optional
+    ->requester('0712345678'); // optional - the customer on
+                               // whose behalf the transfer is
+                               // being made.
+
+# make the transfer
+$btb->transfer();
+
+if(!$btb->accepted()) {
+  $error = $btb->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $btb->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+//... save to db, etc
+```
+# Quick Note
+If you are confused on how to handle the results in the callback, please read the earlier sections of this README file.
 
 # Reporting Errors
 Please open an issue in case there is a bug found.
