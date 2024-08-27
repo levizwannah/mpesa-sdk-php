@@ -5,6 +5,7 @@ namespace LeviZwannah\MpesaSdk;
 use BadMethodCallException;
 use Exception;
 use LeviZwannah\MpesaSdk\Helpers\AccountBalance;
+use LeviZwannah\MpesaSdk\Helpers\BusinessToBulk;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToBusiness;
 use LeviZwannah\MpesaSdk\Helpers\BusinessToCustomer;
 use LeviZwannah\MpesaSdk\Helpers\Constant;
@@ -466,6 +467,21 @@ class Mpesa
             "secret" => $this->secret,
             "code" => $this->code,
             "baseUrl" => $this->baseUrl
+        ]);
+    }
+
+    /**
+     * Gets the configured BusinessToBulk Object
+     * @return BusinessToBulk
+     */
+    public function btb(){
+        return new BusinessToBulk([
+            "key" => $this->key,
+            "secret" => $this->secret,
+            "code" => $this->code,
+            "baseUrl" => $this->baseUrl,
+            "credential" => $this->credential,
+            "initiator" => $this->initiator
         ]);
     }
 

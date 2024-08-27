@@ -38,6 +38,10 @@
 
         // Account Balance
         const ACCOUNT_BALANCE = "AccountBalance";
+
+        // Business To Bulk
+        const BUSINESS_TO_BULK = "BusinessPayToBulk";
+        
     }
 
 ?>
