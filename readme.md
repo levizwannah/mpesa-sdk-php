@@ -612,6 +612,12 @@ $btb->amount(100)
     ->resultUrl('https://my.url/path/to/result')
     ->timeoutUrl('https://my.url/path/to/timeout');
 
+# if in the same organization use
+$btb->amount(100)
+    ->toSelf() // accepts an optional short code param for sub-organizations
+    ->resultUrl('https://my.url/path/to/result')
+    ->timeoutUrl('https://my.url/path/to/timeout');
+
 # optional
 $btb->remarks('optional remarks') // optional
     ->requester('0712345678'); // optional - the customer on
