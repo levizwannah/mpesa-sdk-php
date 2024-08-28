@@ -78,6 +78,15 @@ class BusinessToBulk extends MpesaWithInitiator
         return $this;
     }
 
+    public function toSelf(string $code = null)
+    {
+        $code ??= $this->code;
+        $this->receiver = $code;
+        $this->type = Constant::BUSINESS_MMF_UTILITY;
+
+        return $this;
+    }
+
     /**
      * Sets the customer phone number on behalf of whom you are paying.
      * Accepts 07xxxxxxxx, +2547xxxxxxxxx, or 2547xxxxxxxxx
