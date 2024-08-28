@@ -41,7 +41,7 @@
 
         // Business To Bulk
         const BUSINESS_TO_BULK = "BusinessPayToBulk";
-        
+        const BUSINESS_MMF_UTILITY = "BusinessTransferFromMMFToUtility";
     }
 
 ?>
