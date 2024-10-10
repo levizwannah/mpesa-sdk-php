@@ -14,6 +14,7 @@ use LeviZwannah\MpesaSdk\Helpers\RemitTax;
 use LeviZwannah\MpesaSdk\Helpers\RequestError;
 use LeviZwannah\MpesaSdk\Helpers\Reversal;
 use LeviZwannah\MpesaSdk\Helpers\Stk;
+use LeviZwannah\MpesaSdk\Helpers\Subscription;
 use LeviZwannah\MpesaSdk\Helpers\Traits\FieldToPropertyTrait;
 use LeviZwannah\MpesaSdk\Helpers\TransactionQuery;
 use LeviZwannah\MpesaSdk\Helpers\UrlManager;
@@ -310,7 +311,7 @@ class Mpesa
 
         $obj = json_decode($response);
 
-        if(is_null($obj)) {
+        if (is_null($obj)) {
             throw new Exception("Unable to access Mpesa Gateway");
         }
 
@@ -457,6 +458,31 @@ class Mpesa
     }
 
     /**
+     * Gets the configured Subscription (Ratiba) object
+     * @return Subscription
+     */
+    public function subscription()
+    {
+        return new Subscription([
+            "key" => $this->key,
+            "secret" => $this->secret,
+            "code" => $this->code,
+            "till" => $this->till,
+            "baseUrl" => $this->baseUrl
+        ]);
+    }
+
+    /**
+     * Gets the configured Ratiba (Subscription) object
+     * @see subscription()
+     * @return Subscription
+     */
+    public function ratiba()
+    {
+        return $this->subscription();
+    }
+
+    /**
      * Gets the configured QrCode Object
      * @return QrCode
      */
@@ -474,7 +500,8 @@ class Mpesa
      * Gets the configured BusinessToBulk Object
      * @return BusinessToBulk
      */
-    public function btb(){
+    public function btb()
+    {
         return new BusinessToBulk([
             "key" => $this->key,
             "secret" => $this->secret,

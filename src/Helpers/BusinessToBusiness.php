@@ -64,7 +64,7 @@ class BusinessToBusiness extends MpesaWithInitiator {
     protected $identifierType = 4;
 
     /**
-     * You should not call this directly. Use $mpesa->b2c()
+     * You should not call this directly. Use $mpesa->b2b()
      * @param array $config
      */
     public function __construct(array $config)
