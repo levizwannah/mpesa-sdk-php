@@ -640,6 +640,57 @@ $conversationId = $response->ConversationID;
 
 //... save to db, etc
 ```
+
+## Mpesa Ratiba (Subscription)
+This API enables you to create Mpesa Standing Orders. Take it as a subscription API for Mpesa
+
+### Requirements
+Ensure these values were set as shown in the setup section:
+- Consumer Key (`key`)
+- Consumer Secret(`secret`)
+- Business Short Code (`code`);
+
+### Usage
+```php
+// ...setup...
+$subscription = $mpesa->subscription(); // same as $mpesa->ratiba();
+
+$subscription->amount(100)
+    ->plan("Gold Plan") // Standing order Name (same as $sub->name('Gold Plan'))
+    ->phone('0740958756')
+    ->startDate(10, 10, 2024) // month, day, year
+    ->endDate(10, 11, 2024) // month, day, year
+    ->frequency(Constant::FREQ_DAILY)
+    ->callback('https://my.url/path/to/result');
+
+# if your code is paybill number
+$subscription->paybill() // if paybill number
+    ->account('account-number'); 
+
+# if using a till till number
+$subscription->buygoods()
+    ->till(1234567); // if till number
+
+# optional
+$subscription->description('optional description');
+
+# create subscription
+$subscription->create();
+
+if(!$subscription->accepted()) {
+  $error = $subscription->error();
+  echo "$error->code $error->message";
+  // exit;
+}
+
+$response = $subscription->response();
+$originatorId = $response->OriginatorConversationID;
+$conversationId = $response->ConversationID;
+//...
+
+//... save to db, etc
+```
+
 # Quick Note
 If you are confused on how to handle the results in the callback, please read the earlier sections of this README file.
 
