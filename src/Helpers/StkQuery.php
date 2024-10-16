@@ -15,7 +15,7 @@ class StkQuery extends Mpesa {
     
     /**
      * !!!Do not call this directly. It needs config from the parent STK class.
-     * User $mpesa->stk()->query();
+     * Use $mpesa->stk()->query();
      * @param array<string,string> $config initial configurations for the stk push.
      * This is gotten from the parent Mpesa.
      */

@@ -28,7 +28,7 @@ class AccountBalance extends MpesaWithInitiator {
     protected string $type = Constant::ACCOUNT_BALANCE;
 
     /**
-     * You should not call this directly. Use $mpesa->b2c()
+     * You should not call this directly. Use $mpesa->balance()
      * @param array $config
      */
     public function __construct(array $config)
