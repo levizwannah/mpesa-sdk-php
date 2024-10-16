@@ -1,0 +1,39 @@
+# _config.yml
+
+# Site settings
+title: M-Pesa SDK for PHP
+description: A lightweight SDK for seamless M-Pesa integrations in PHP applications
+baseurl: "/mpesa-sdk-php"
+url: "https://levizwannah.github.io"
+
+# Author details
+author: 
+  name: Levi Kamara Zwannah
+  email: your-email@example.com
+
+# Theme setup
+theme: jekyll-theme-cayman
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jemoji
+
+# Features
+markdown: kramdown
+highlighter: rouge
+
+# SEO settings
+seo:
+  title: "M-Pesa SDK PHP"
+  description: "Simple, lightweight SDK for integrating M-Pesa in PHP applications."
+
+# Footer
+footer:
+  message: "Developed by Levi Kamara Zwannah"
+  powered_by: "Powered by GitHub Pages"
+  links:
+    - title: "GitHub"
+      url: "https://github.com/levizwannah/mpesa-sdk-php"

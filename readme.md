@@ -684,8 +684,7 @@ if(!$subscription->accepted()) {
 }
 
 $response = $subscription->response();
-$originatorId = $response->OriginatorConversationID;
-$conversationId = $response->ConversationID;
+$refId = $response->responseRefID;
 //...
 
 //... save to db, etc
