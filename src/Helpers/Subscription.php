@@ -307,4 +307,14 @@ class Subscription extends Mpesa
         $this->assertExists("callback", "Callback URL");
         return true;
     }
+
+    /**
+     * True if Mpesa accepted the request, false otherwise.
+     * @return bool
+     */
+    public function accepted()
+    {
+        return isset($this->response()->ResponseHeader?->responseCode)
+            && $this->response()->ResponseHeader?->responseCode == 200;
+    }
 }
