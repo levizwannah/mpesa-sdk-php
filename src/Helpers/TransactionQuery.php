@@ -143,7 +143,10 @@ class TransactionQuery extends MpesaWithInitiator {
     public function okay()
     {
         parent::okay();
-        $this->assertExists("transId", "Transaction ID");
+        if(empty($this->transId)) {
+            $this->assertExists("transId", "Transaction ID");
+        }
+
         $this->assertExists("resultUrl", "Result URL");
         $this->assertExists("timeoutUrl", "Timeout URL");
         $this->assertExists("remarks", "Remarks");
@@ -159,8 +162,6 @@ class TransactionQuery extends MpesaWithInitiator {
             "CommandID" => "TransactionStatusQuery",
             "Initiator" => $this->initiator,
             "SecurityCredential" => $this->credential,
-            "TransactionID" => $this->transId,
-            "OriginatorConversationID" => $this->conversationId,
             "PartyA" => !empty($this->partyA) ? $this->partyA : $this->code,
             "IdentifierType" => $this->type,
             "ResultURL" => $this->resultUrl,
@@ -168,6 +169,13 @@ class TransactionQuery extends MpesaWithInitiator {
             "Remarks" => $this->remarks,
             "Occasion" => $this->occasion
         ];
+
+        if(empty($this->transId)) {
+            $data["OriginatorConversationID"] = $this->conversationId;
+        }
+        else {
+            $data["TransactionID"] = $this->transId;
+        }
 
         $this->response = $this->request($data, "/mpesa/transactionstatus/v1/query");
 
