@@ -167,15 +167,10 @@ class TransactionQuery extends MpesaWithInitiator {
             "ResultURL" => $this->resultUrl,
             "QueueTimeOutURL" => $this->timeoutUrl,
             "Remarks" => $this->remarks,
-            "Occasion" => $this->occasion
+            "Occasion" => $this->occasion,
+            "TransactionID" => $this->transId,
+            "OriginatorConversationID" => $this->conversationId,
         ];
-
-        if(empty($this->transId)) {
-            $data["OriginatorConversationID"] = $this->conversationId;
-        }
-        else {
-            $data["TransactionID"] = $this->transId;
-        }
 
         $this->response = $this->request($data, "/mpesa/transactionstatus/v1/query");
 
