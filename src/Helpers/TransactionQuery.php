@@ -143,7 +143,7 @@ class TransactionQuery extends MpesaWithInitiator {
     public function okay()
     {
         parent::okay();
-        if(empty($this->transId)) {
+        if(empty($this->conversationId)) {
             $this->assertExists("transId", "Transaction ID");
         }
 
