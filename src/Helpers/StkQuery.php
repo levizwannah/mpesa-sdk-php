@@ -77,7 +77,7 @@ class StkQuery extends Mpesa {
             "CheckoutRequestID" => $this->checkoutId,
         ];
 
-        $this->response = $this->request($data, "/mpesa/stkpushquery/v1/query");
+        $this->response = $this->request($data, "/mpesa/stkpushquery/v2/query");
 
         return $this;
     }
