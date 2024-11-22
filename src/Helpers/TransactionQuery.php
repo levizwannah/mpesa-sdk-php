@@ -169,7 +169,7 @@ class TransactionQuery extends MpesaWithInitiator {
             "Remarks" => $this->remarks,
             "Occasion" => $this->occasion,
             "TransactionID" => $this->transId,
-            "OriginatorConversationID" => $this->conversationId,
+            "OriginalConversationID" => $this->conversationId,
         ];
 
         $this->response = $this->request($data, "/mpesa/transactionstatus/v1/query");
