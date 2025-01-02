@@ -1,3 +1,4 @@
+![Installs](https://img.shields.io/packagist/dt/levizwannah/mpesa-sdk-php)
 # Mpesa SDK for PHP
 A **Clean, Elegant, and Independent** PHP SDK for interacting with Safaricom Daraja APIs. The SDK is purely object-oriented and easy to understand and use. It has no dependency and hence can be used in any PHP project: plain or framework-based.
 
