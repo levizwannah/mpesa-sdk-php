@@ -1,5 +1,6 @@
+![Installs](https://img.shields.io/packagist/dt/levizwannah/mpesa-sdk-php)
 # Mpesa SDK for PHP
-A **Clean, Elegant, and Independent** PHP SDK for interacting with Safaricom Daraja APIs. The SDK is purely object-oriented and easy to understand and use. It has no dependency and hence can be used in any PHP project: plain or framework-based.
+A **Clean, Elegant, and Independent** PHP SDK for integrating M-Pesa services with your application. The SDK is purely object-oriented and easy to understand and use. It has no dependency and hence can be used in any PHP project: plain or framework-based.
 
 # Requirement
 - PHP version >= 7.4
@@ -21,7 +22,7 @@ Firstly create an Mpesa object with the necessary configurations.
 
 *If you are using a till number, then the `till` key is required, otherwise only the business short code is required.*  
 
-> Note: *The business short code is the same as the Paybill number. For till numbers, it is different.*  
+> Note: *The business shortcode is the same as the Paybill number. For till numbers, it is different.*  
 
 ```php
 require('path/to/vendor/autoload.php');
@@ -34,6 +35,7 @@ $config = [
   "code" => "12345", // business short code
   
   "till" => "67891", // optional till number
+  "passkey" => "xxxx", // optional passkey
   "initiator" => "levizwannah", // optional initiator name
   "credential" => "levi-cred++=="  // optional security credential
 ]
@@ -124,8 +126,8 @@ $responseCode = $response->ResponseCode;
 
 ## Security in Handling Callbacks
 The SDK has two static helper methods to help you when handling mpesa responses in your callbacks.
-1. `verifyOrigin():bool` : returns a true if the callback response is from Mpesa and false otherwise.
-2. `data($asArray = false): object|array` : gets the callback data from mpesa and returns it as an object or array based on its argument.
+1. `verifyOrigin(): bool`: returns a `true` if the callback response is from Mpesa and `false` otherwise.
+2. `data($asArray = false): object|array`: gets the callback data from mpesa and returns it as an object or array based on its argument.
 
 ```php
 require('path/to/vendor/autoload.php');
@@ -138,15 +140,15 @@ $result = Mpesa::data();
 //...
 ```
 ## Handling Callback Payloads
-> Note: **Response** represents what your get from Mpesa when you make a request. **Result** is the payload sent to your callback URLs.
+> Note: `Response` represents what you get from Mpesa when you make a request. `Result` is the payload sent to your callback URLs.
 
 ### Payload format
 Please refer to the Daraja documentation at https://developer.safaricom.co.ke to see the expected payload. For forward compatibility, the SDK doesn't alter the responses or payload from Mpesa.
 
 ### The confusing part
-In every **response**, there will be unique keys. For example, the `MerchantRequestID` and  `CheckoutRequestID` in the STK push response, and the `OriginatorConversationID` and `ConversationID` in the other APIs responses. These keys identify the transaction on Mpesa. Save these keys in your database or some storage alongside the pending transaction. 
+In every `Response`, there will be unique keys. For example, the `MerchantRequestID` and  `CheckoutRequestID` in the STK push response, and the `OriginatorConversationID` and `ConversationID` in the other APIs responses. These keys identify the transaction on Mpesa. Save these keys in your database or some storage alongside the pending transaction. 
 
-In the **result** payload that will be sent to your callbacks, these keys will be present. Therefore, you can use them to update the corresponding transactions in your storage or database.
+In the `Result` payload that will be sent to your callbacks, these keys will be present. Therefore, you can use them to update the corresponding transactions in your storage or database.
 
 ## Mpesa Express (STK Push) API
 Used for initiating STK Push requests. 
@@ -232,7 +234,7 @@ $merchantId = $response->MerchantRequestID;
 > **Note**: Use `paybill()` if you are querying an STK request made for a paybill number, otherwise use `buygoods()`. By default, it queries for STK requests made for paybill numbers.  
 
 ## C2B URLs Registration API
-Enables you to register your C2B urls. The SDK also provides an easy response method for your confirmation and validation scripts.
+Enables you to register your C2B URLs. The SDK also provides an easy response method for your confirmation and validation scripts.
 
 > The `validation url` is not required unless you explicitly ask the Mpesa team to enable it for you.  
 
@@ -272,7 +274,7 @@ use LeviZwannah\MpesaSdk\Mpesa;
 # confirmation.url
 
 // your code ...
-Mpesa::confirm();
+Mpesa::confirm(); // echos the formatted response
 // your code...
 // send SMS ... etc
 
@@ -309,7 +311,7 @@ See the code snippet on how to use this SDK.
 
 $reversal = $mpesa->reversal();
 
-$reverser->timeoutUrl('https://my.url/path/to/reversal/timeout')
+$reversal->timeoutUrl('https://my.url/path/to/reversal/timeout')
         ->resultUrl('https://my.url/path/to/reversal/result')
         ->transId('1X1Y1ZNME') // transaction ID to reverse
         ->amount(100) // amount paid
@@ -330,10 +332,10 @@ $conversationId = $response->ConversationID;
 //...
 
 ```
-> In your callbacks scripts, please ensure to follow the recommendation in the **security section** of this doc.
+> In your callback scripts, please ensure to follow the recommendation in the **security section** of this doc.
 
 ## Transaction Query API
-The Transaction query API enable you to check the statuses of transactions made to or by your business short code.
+The Transaction query API enables you to check the statuses of transactions made to or by your business shortcode.
 
 ### Requirements
 Ensure these values were set as shown in the setup section:
@@ -379,7 +381,7 @@ Ensure these values were set as shown in the setup section:
 - Business Short Code (`code`);
 
 ### Usage
-See the below code snippet
+See the code snippet
 ```php
 //...setup...
 
@@ -425,16 +427,16 @@ $b2b->amount(100)
     ->timeoutUrl('https://my.url/path/to/timeout');
 
 # if receiver is a paybill number
-$b2b->paybill() // if receiver is a paybill number
+$b2b->paybill()
     ->account('account-number'); 
 
 # if receiver is a till number
-$b2b->buygoods(); // if receiver is a till number
+$b2b->buygoods();
 
 # optional
-$b2b->remarks('optional remarks') // optional
-    ->occasion('optional occasion') // optional
-    ->requester('0712345678'); // optional - the customer on
+$b2b->remarks('optional remarks')
+    ->occasion('optional occasion')
+    ->requester('0712345678'); // the customer on
                                // whose behalf the money is
                                // being paid.
 
@@ -455,7 +457,7 @@ $conversationId = $response->ConversationID;
 //... save to db, etc
 ```
 ## B2C API
-The B2C API allows you to make payments mobile numbers
+The B2C API allows you to make payments to mobile numbers
 from your business short code.
 
 ### Requirements
@@ -541,10 +543,10 @@ $conversationId = $response->ConversationID;
 
 ```
 ## Dynamic QR Code API
-Enables you to generate QR Code for different transactions. Please see the Daraja documentation
+Enables you to generate QR codes for different transactions. Please see the Daraja documentation
 
 `
-Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have My Safaricom App or M-PESA app, to scan and capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.` -- Daraja
+Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have My Safaricom App or M-PESA app, to scan and capture till number and amount and then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.` -- Daraja
 
 ### Requirements
 Ensure these values were set as shown in the setup section:
