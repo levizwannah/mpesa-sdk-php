@@ -11,6 +11,8 @@ use LeviZwannah\MpesaSdk\Mpesa;
 class Subscription extends Mpesa
 {
 
+    public string $customId;
+
     /**
      * The Start date of the subscription (yyyymmdd)
      */
@@ -80,6 +82,8 @@ class Subscription extends Mpesa
      */
     public function __construct(array $config)
     {
+        $this->customId = uniqid();
+        
         $this->configure($config);
     }
 
@@ -216,6 +220,11 @@ class Subscription extends Mpesa
         return $this;
     }
 
+    public function systemReference(string $systemReference) {
+        $this->customId = $systemReference;
+        return $this;
+    }
+
     /**
      * Sets the command ID to Standing order for Merchant (Till numbers).
      */
@@ -263,6 +272,7 @@ class Subscription extends Mpesa
             "Amount" => $this->amount,
             "StartDate" => $this->startDate,
             "EndDate" => $this->endDate,
+            "CustomStoId" => $this->customId,
             "Frequency" => $this->frequency,
             "AccountReference" => $this->reference,
             "TransactionDesc" => $this->description,
@@ -303,6 +313,7 @@ class Subscription extends Mpesa
         $this->assertExists("amount");
         $this->assertExists("startDate", "Start Date");
         $this->assertExists("endDate", "End Date");
+        $this->assertExists("customId", "You need to add a unique ID");
         $this->assertExists("frequency", "Frequency of Payment");
         $this->assertExists("callback", "Callback URL");
         return true;
