@@ -44,18 +44,19 @@
         const BUSINESS_MMF_UTILITY = "BusinessTransferFromMMFToUtility";
 
         // Standing Orders
-        const STANDING_ORDERS_PAYBILL = "Standing Order Customer Pay Bill";
-        const STANDING_ORDERS_TILL = "Standing Order Customer Pay Merchant";
+        const STANDING_ORDERS_PAYBILL = "Standing Order Pay Bill External Third Party";
+        const STANDING_ORDERS_TILL = "Standing Order Pay Merchant External Third Party";
 
         // Standing Orders
         const FREQ_ONE_OFF = 1;
         const FREQ_DAILY = 2;
         const FREQ_WEEKLY = 3;
-        const FREQ_MONTHLY = 4;
-        const FREQ_BI_MONTHLY = 5;
-        const FREQ_QUARTERLY = 6;
-        const FREQ_HALF_YEARLY = 7;
-        const FREQ_YEARLY = 8;
+        const FREQ_BI_WEEKLY = 4;
+        const FREQ_MONTHLY = 5;
+        const FREQ_BI_MONTHLY = 6;
+        const FREQ_QUARTERLY = 7;
+        const FREQ_HALF_YEARLY = 8;
+        const FREQ_YEARLY = 9;
     }
 
 ?>
